@@ -1,4 +1,37 @@
+@import '../vars.scss';
+
 .buttons {
     grid-column: 2 / 4;
     grid-row: 5 / 6;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 1rem;
 }
+
+.btn {
+    margin: 0;
+    padding: 1em 2em;
+
+    width: 12em;
+
+    border: none;
+    border-radius: 3em;
+
+    font-weight: bold;
+    color: $hovered;
+    text-transform: capitalize;
+
+    background-color: $purple;
+}
+
+.btn + .btn {
+    margin-left: 6em;
+}
+
+.btn:hover {
+    border: 1px solid $hovered;
+}
+

@@ -74,6 +74,10 @@
     text-align: center;
 }
 
+.task-body::first-letter {
+    text-transform: capitalize;
+}
+
 .task-title {
     margin: 0;
     padding: 0;
