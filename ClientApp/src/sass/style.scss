@@ -1,4 +1,9 @@
-body {
-    background-color: bisque;
-    color: blue;
-}
+@import 'vars.scss';
+@import 'blocks/main.scss';
+@import 'blocks/title.scss';
+@import 'blocks/search.scss';
+@import 'blocks/account.scss';
+@import 'blocks/calendar.scss';
+@import 'blocks/tags.scss';
+@import 'blocks/tasks.scss';
+@import 'blocks/buttons.scss';

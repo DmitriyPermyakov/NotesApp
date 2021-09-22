@@ -1,0 +1,130 @@
+@import '../vars.scss';
+
+.account {
+    grid-column: 1 / 2;
+    grid-row: 2 / 4;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    padding: 2em;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.profile__avatar {
+    width: 3.5em;
+    height: 3.5em;
+
+    background-color: lavenderblush;
+    border-radius: 50%;
+}
+
+.profile__info {
+    margin: 2em 0;
+    text-align: center;
+}
+
+.fullname {
+    margin: 0;
+    line-height: .4;
+    font-size: inherit;
+    color: $hovered;
+}
+
+.email {
+    font-size: .6em;
+    color: #cfcfcf;
+
+    text-decoration: none;
+}
+.email:hover {
+    text-decoration: underline;
+}
+
+.notification {
+    margin: 0;
+    padding: 0;
+
+    width: 2.5em;
+    height: 2.5em;
+
+    border: none;
+    border-radius: 50%;
+    background-color: $light-gray;
+
+    position: relative;
+}
+
+.notification__dot {
+    width: .7em;
+    height: .7em;
+
+    border-radius: 50%;
+    background-color: $purple;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.notification:hover .notification-icon {
+    fill: $hovered;
+}
+
+.notification-icon {
+    display: inline-block;
+
+    width: 1.5em;
+    height: 1.5em;
+
+    fill: #c9cacc;
+}
+
+.task-progress {
+    margin-top: 2em;
+    width: 100%;
+}
+
+.task-progress__progress-bar {
+    width: 100%;
+    height: .35em;
+    background-color: $light-gray;
+    border-radius: 1em;
+}
+
+.progress-inner {
+    width: 50%;
+    height: 100%;
+
+    background-color: $purple;
+    border-radius: 1em;
+    box-shadow: 0 0 3px $purple;
+}
+
+.task-progress__info {
+    display: flex;
+    justify-content: space-between;
+
+    text-align: center;
+    text-transform: capitalize;
+    font-size: .7rem;
+}
+
+.info-item__number {
+    margin-bottom: 0;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: $hovered;
+}
+
+.info-item__label {
+    font-size: .9em;
+    font-weight: 500;
+}

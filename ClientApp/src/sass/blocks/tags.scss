@@ -1,0 +1,42 @@
+@import '../vars.scss';
+
+.tags {
+    grid-column: 1 / 2;
+    grid-row: 4 / 6;
+
+    margin: 0;
+    padding: 2rem;
+}
+
+.tags-title {
+    padding: 0;
+    margin-top: 0;
+    font-size: 1rem;
+    font-weight: bold;
+    color: $hovered;
+    text-transform: capitalize;
+}
+
+.tags-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+    font-size: .7em;
+    font-weight: 300;
+    color:$hovered;
+
+}
+
+.tags-list__item {
+    margin: .2em .3em;
+    padding: .1em 1em;
+    line-height: 1.4;
+    border-radius: 1em;
+    background-color:mediumorchid;
+}
+
+

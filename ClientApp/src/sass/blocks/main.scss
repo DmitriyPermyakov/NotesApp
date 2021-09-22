@@ -1,0 +1,35 @@
+*,
+::before,
+::after{
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: $light-gray;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    height: 100vh;
+    width: 100vw;
+
+    background-color: $light-gray;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr;
+    grid-template-rows: 1fr 2fr 4fr 3fr 1fr;
+
+    width: 100%;
+    height: 100%;
+    background-color: $main-bg-color;
+}
+
+.bordered {
+    border: 1px solid $light-gray;
+}

@@ -1,0 +1,115 @@
+@import '../vars.scss';
+
+.tasks {
+    grid-column: 2 / 4;
+    grid-row: 3 / 5
+}
+
+.tasks__list {
+    background-color: $dark-bg-color;
+}
+
+.tasks__item:first-child {
+    border-bottom: 1px solid $light-gray;
+}
+
+.tasks__item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    width: 100%;
+
+    padding: 1em 1.5em;
+    font-size: 1rem;
+}
+
+.tasks__item + .tasks__item {
+    border-bottom: 1px solid $light-gray;
+}
+
+.tasks__item:hover {
+    background-color: $purple;
+}
+
+.tasks__item:hover .tasks-icon {
+    background-color: $hovered;
+}
+
+.tasks__item:hover .task-description {
+    color: $hovered;
+}
+
+.tasks__item:hover .task-menu__icon span {
+    background-color: $hovered;
+}
+
+.tasks-icon {
+    display: inline-block;
+    margin-right: 2em;
+
+    height: 2.5em;
+    width: 2.5em;
+
+    border: 2px solid $light-gray;
+    border-radius: 50%;
+
+    position: relative;
+}
+
+.task-icon__icon {
+    width: 1.3em;
+    height: 1.3em;
+
+    position: absolute;
+    top: 25%;
+    left: 25%;
+
+    fill: $light-gray;
+}
+
+.task-body {
+    display: inline-block;
+
+    text-align: center;
+}
+
+.task-title {
+    margin: 0;
+    padding: 0;
+
+    font-size: .9em;
+    color: $hovered;
+}
+
+.task-description {
+    margin: 0;
+    padding: 0;
+
+    font-size: .7em;
+}
+
+.task-menu {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.task-menu__icon {
+
+    cursor: pointer;
+}
+
+.task-menu__icon span {
+    display: inline-block;
+    width: .5em;
+    height: .5em;
+
+    background-color: $light-gray;
+    border-radius: 50%;
+}
+
+.task-menu__icon span + span {
+    margin-left: .2em;
+}

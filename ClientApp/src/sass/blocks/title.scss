@@ -1,0 +1,16 @@
+.title {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-transform: capitalize;
+}
+
+.title > h1 {
+    padding: 0;
+    margin: 0;
+    font-size: inherit;
+}

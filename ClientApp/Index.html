@@ -8,6 +8,184 @@
     <title>NoteApp</title>
 </head>
 <body>
-    Hello world!!
+    <svg style="display:none;">
+        <symbol id="search" x="0px" y="0px" viewBox="0 0 612.01 612.01">
+           <g>
+            <path d="M606.209,578.714L448.198,423.228C489.576,378.272,515,318.817,515,253.393C514.98,113.439,399.704,0,257.493,0
+            C115.282,0,0.006,113.439,0.006,253.393s115.276,253.393,257.487,253.393c61.445,0,117.801-21.253,162.068-56.586
+            l158.624,156.099c7.729,7.614,20.277,7.614,28.006,0C613.938,598.686,613.938,586.328,606.209,578.714z M257.493,467.8
+            c-120.326,0-217.869-95.993-217.869-214.407S137.167,38.986,257.493,38.986c120.327,0,217.869,95.993,217.869,214.407
+            S377.82,467.8,257.493,467.8z"/>
+           </g>
+        </symbol>
+    </svg>
+    <svg style="display: none;">
+        <symbol id="bell" viewBox="-43 0 512 512" >
+            <g>
+                <path d="m413.417969 360.8125c-32.253907-27.265625-50.75-67.117188-50.75-109.335938v-59.476562c0-75.070312-55.765625-137.214844-128-147.625v-23.042969c0-11.796875-9.558594-21.332031-21.335938-21.332031-11.773437 0-21.332031 9.535156-21.332031 21.332031v23.042969c-72.257812 10.410156-128 72.554688-128 147.625v59.476562c0 42.21875-18.496094 82.070313-50.945312 109.503907-8.296876 7.105469-13.054688 17.429687-13.054688 28.351562 0 20.589844 16.746094 37.335938 37.332031 37.335938h352c20.589844 0 37.335938-16.746094 37.335938-37.335938 0-10.921875-4.757813-21.246093-13.25-28.519531zm0 0"/><path d="m213.332031 512c38.636719 0 70.957031-27.542969 78.378907-64h-156.757813c7.425781 36.457031 39.746094 64 78.378906 64zm0 0"/>
+            </g>
+        </symbol>
+    </svg>
+    <svg style="display: none;">
+        <symbol id="arrow" x="0px" y="0px" viewBox="0 0 512.002 512.002">
+            <g>
+                <path d="M388.425,241.951L151.609,5.79c-7.759-7.733-20.321-7.72-28.067,0.04c-7.74,7.759-7.72,20.328,0.04,28.067l222.72,222.105
+			L123.574,478.106c-7.759,7.74-7.779,20.301-0.04,28.061c3.883,3.89,8.97,5.835,14.057,5.835c5.074,0,10.141-1.932,14.017-5.795
+			l236.817-236.155c3.737-3.718,5.834-8.778,5.834-14.05S392.156,245.676,388.425,241.951z"/>
+            </g>
+        </symbol>
+    </svg>
+    <svg style="display: none;">
+        <symbol id="checked" viewBox="0 0 515.556 515.556">
+            <g>
+                <path d="m0 274.226 176.549 176.886 339.007-338.672-48.67-47.997-290.337 290-128.553-128.552z"/>
+            </g>
+        </symbol>
+    </svg>
+    <div class="container bordered">
+        <div class="title bordered"><h1>task manager</h1></div>
+
+        <div class="search-and-filter bordered">
+            <div class="search">
+                <svg class="search-icon">
+                    <use xlink:href="#search"></use>
+                </svg>
+                <input type="text" class="search-field" placeholder="Search...">
+            </div>
+            <div class="search-filter">
+                <button class="search-button">day</button>
+                <button class="search-button">week</button>
+                <button class="search-button">month</button>
+                <button class="search-button">year</button>
+            </div>
+        </div>
+
+        <div class="account bordered">
+            <div class="profile">
+                <image class="profile__avatar" src="dist/assets/img/icons/bussiness-man.svg" alt="avatar"></image>
+                <div class="profile__info">
+                    <p class="fullname">Dmitry Permyakov</p>
+                    <a class="email" href="">dmitrypermyakov1990@gmail.com</a>
+                </div>
+                <button class="notification">
+                    <div class="notification__dot"></div>
+                    <svg class="notification-icon">
+                        <use xlink:href="#bell"></use>
+                    </svg>
+                </button>
+            </div>
+            <div class="task-progress">
+                <div class="task-progress__progress-bar">
+                    <div class="progress-inner"></div>
+                </div>
+                <div class="task-progress__info">
+                    <div class="info-item">
+                        <p class="info-item__number">13</p>
+                        <label for="" class="info-item__label">completed</label>
+                    </div>
+                    <div class="info-item">
+                        <p class="info-item__number">4</p>
+                        <label for="" class="info-item__label">failed</label>
+                    </div>
+                    <div class="info-item">
+                        <p class="info-item__number">13</p>
+                        <label for="" class="info-item__label">all tasks</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calendar-container bordered">
+            <button class="calendar__next-btn">
+                <svg class="next-btn__icon left">
+                    <use xlink:href="#arrow"></use>
+                </svg>
+            </button>
+            <button class="calendar">
+                <p class="calendar__day-of-week">sanday</p>
+                <p class="calendar__date">Apr 2, 2021</p>
+            </button>
+            <button class="calendar__next-btn">
+                <svg class="next-btn__icon">
+                    <use xlink:href="#arrow"></use>
+                </svg>
+            </button>
+        </div>
+
+        <div class="tags bordered">
+            <h2 class="tags-title">tags</h2>
+            <ul class="tags-list">
+                <li class="tags-list__item">travelling</li>
+                <li class="tags-list__item">programming</li>
+                <li class="tags-list__item">institute</li>
+                <li class="tags-list__item">self improvement in this year</li>
+                <li class="tags-list__item">days of birth</li>
+            </ul>
+        </div>
+
+        <div class="tasks bordered">
+            <div class="tasks__list">
+                <div class="tasks__item">
+                    <div class="tasks-icon">
+                        <svg class="task-icon__icon">
+                            <use xlink:href="#checked"></use>
+                        </svg>
+                    </div>
+                    <div class="task-body">
+                        <h3 class="task-title">Make the best  app in the world</h3>
+                        <p class="task-description">It's the best idea i can imagine</p>
+                    </div>
+                    <div class="task-menu">
+                        <div class="task-menu__icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tasks__item">
+                    <div class="tasks-icon">
+                        <svg class="task-icon__icon">
+                            <use xlink:href="#checked"></use>
+                        </svg>
+                    </div>
+                    <div class="task-body">
+                        <h3 class="task-title">Make the best  app in the world</h3>
+                        <p class="task-description">It's the best idea i can imagine</p>
+                    </div>
+                    <div class="task-menu">
+                        <div class="task-menu__icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tasks__item">
+                    <div class="tasks-icon">
+                        <svg class="task-icon__icon">
+                            <use xlink:href="#checked"></use>
+                        </svg>
+                    </div>
+                    <div class="task-body">
+                        <h3 class="task-title">Make the best  app in the world</h3>
+                        <p class="task-description">It's the best idea i can imagine</p>
+                    </div>
+                    <div class="task-menu">
+                        <div class="task-menu__icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <form action="" class="tasks__form"></form>
+        </div>
+
+        <div class="buttons bordered">buttons</div>
+    </div>
 </body>
 </html>
