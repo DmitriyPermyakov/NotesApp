@@ -2,10 +2,16 @@
 
 .tasks {
     grid-column: 2 / 4;
-    grid-row: 3 / 5
+    grid-row: 3 / 5;
+
+    display: grid;
+    grid-template-columns: 5fr 4fr;
+    grid-template-rows: 1fr;
+
 }
 
 .tasks__list {
+    grid-column: 1 / 2;
     background-color: $dark-bg-color;
 }
 

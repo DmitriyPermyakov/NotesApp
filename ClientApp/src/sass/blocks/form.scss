@@ -1,0 +1,97 @@
+@import '../vars.scss';
+@import 'tasks.scss';
+
+.tasks-form {
+    grid-column: 2 / 3;
+    margin: 0;
+    padding: 3em;
+
+    border-left: 1px solid $light-gray;
+
+    background-color: $dark-bg-color;
+}
+
+.tasks-form__input-title {
+    display: block;
+
+    margin-bottom: 2em;
+    padding: .8em 1.5em;
+    width: 100%;
+
+    border: none;
+    border-radius: .5em;
+    outline: none;
+
+    background-color: $main-bg-color;
+
+    font-family: 'Roboto', sans-serif;
+    font-size: .85rem;
+    font-weight: bold;
+    color: $light-gray;
+}
+
+.tasks-form__input-title:focus,
+.tasks-form__input-title:hover {
+    box-shadow: 0 0 5px  $purple;
+}
+
+.tasks-form__input-comment {
+    display: block;
+    margin: 0;
+    padding: 1em 1.5em;
+    width: 100%;
+
+    border: none;
+    border-radius: .5em;
+    outline: none;
+
+    background-color: $main-bg-color;
+
+    font-family: 'Roboto', sans-serif;
+    font-size: .85rem;
+    font-weight: bold;
+    color: $light-gray;
+
+    resize: none;
+}
+
+.tasks-form__input-comment:hover,
+.tasks-form__input-comment:focus {
+    box-shadow: 0 0 5px  $purple;
+}
+
+.dates {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: .5em 1em;
+    font-size: 1rem;
+}
+
+.dates label {
+    margin-right: .5em;
+    font-size: .85em;
+    text-transform: capitalize;
+}
+
+.dates__date-picker {
+    border: none;
+    outline: none;
+
+    background-color: $dark-bg-color;
+    color: $light-gray;
+    margin: 0;
+    padding: 0;
+}
+
+
+.dates__date-picker::-webkit-calendar-picker-indicator{
+    padding: 0;
+    margin: 0;
+}
+
+.dates__date-picker::-webkit-datetime-edit-text {
+
+}
+

@@ -182,7 +182,22 @@
 
 
             </div>
-            <form action="" class="tasks__form"></form>
+            <form action="" class="tasks-form">
+                <input type="text" class="tasks-form__input-title">
+                <textarea class="tasks-form__input-comment" name="" id="" cols="30" rows="10"></textarea>
+                <div class="task-options">
+                    <div class="dates">
+                        <div class="dates">
+                            <label for="dates-from">start: </label>
+                            <input class="dates__date-picker" type="date" id="date-from">
+                        </div>
+                        <div class="dates">
+                            <label for="date-to">end: </label>
+                            <input class="dates__date-picker" type="date" id="date-to">
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
 
         <div class="buttons bordered">
