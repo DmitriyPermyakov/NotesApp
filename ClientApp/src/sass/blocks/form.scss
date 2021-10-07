@@ -3,6 +3,7 @@
 
 .tasks-form {
     grid-column: 2 / 3;
+
     margin: 0;
     padding: 3em;
 
@@ -62,36 +63,25 @@
 
 .dates {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 
     padding: .5em 1em;
     font-size: 1rem;
 }
 
-.dates label {
+.dates__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dates__item:hover {
+    box-shadow: 0 0 5px $purple;
+}
+
+.dates__item label {
     margin-right: .5em;
     font-size: .85em;
     text-transform: capitalize;
 }
-
-.dates__date-picker {
-    border: none;
-    outline: none;
-
-    background-color: $dark-bg-color;
-    color: $light-gray;
-    margin: 0;
-    padding: 0;
-}
-
-
-.dates__date-picker::-webkit-calendar-picker-indicator{
-    padding: 0;
-    margin: 0;
-}
-
-.dates__date-picker::-webkit-datetime-edit-text {
-
-}
-

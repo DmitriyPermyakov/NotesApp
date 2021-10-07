@@ -2,10 +2,6 @@ const template = document.createElement('template');
 template.innerHTML = `
 <style>
 .calendar-container {
-    display: inline-block;
-
-
-
     color: var(--text-color);
 
     position: relative;
@@ -14,52 +10,64 @@ template.innerHTML = `
 
     --row-height: 50px;
     --column-widht: 50px;
-    --bg-color: #4c4c4c;
+    --bg-color: #2f3337;
     --text-color: #afafaf;
 }
 
 .calendar-background {
-    width: 100vw;
-    height: 100vh;
+    display: none;
 
-    background-color: transparent;
 
-    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    position: fixed;
     top: 0;
     left: 0;
-    z-index: -1;
+
+    background-color: rgba(0, 0, 0, .6);
 }
 
 .calendar {
     display: none;
     grid-template-columns: repeat(7, var(--column-widht));
-    grid-template-rows: repeat(8, var(--row-height));
+    grid-template-rows: repeat(9, var(--row-height));
 
     align-items: center;
     justify-items: center;
 
-    position: absolute;
-    top: 25px;
-    left: 0;
+    position: fixed;
+    bottom: 8px;
+    right: 8px;
+
+    z-index: 1;
 
     border-radius: .4em;
     background-color: var(--bg-color);
-
+    box-shadow: 0 0 5px #6841da;
 }
 
 .date-input {
-    font-size: 1rem;
-    font-weight: bold;
-    color: #6c6c6c;
+    grid-row: 1 / 2;
+    grid-column: span 7;
+    padding: 1em;
 
-    background-color: var(--bg-color);
+    justify-self: flex-start;
+
+    font-size: 1em;
+    font-weight: normal;
+    color: rgba(255, 255, 255, .75);
+
+    background-color: transparent;
     border: none;
     outline: none;
     box-sizing: border-box;
+
+    cursor: pointer;
 }
 
 .calendar-header {
-    grid-row: 1 / 2;
+    grid-row: 2 / 3;
     grid-column: span 7;
 
     display: flex;
@@ -82,7 +90,7 @@ template.innerHTML = `
 }
 
 .changeMonth:hover .btn-icon {
-    fill:rgba(255, 255, 255, .9);
+    fill:rgba(255, 255, 255, 1);
 }
 
 .btn-icon {
@@ -109,7 +117,7 @@ template.innerHTML = `
 
 
 .weekdays {
-    grid-row: 2 / 3;
+    grid-row: 3 / 4;
     grid-column: span 7;
 
     display: grid;
@@ -156,7 +164,7 @@ template.innerHTML = `
 }
 
 .days {
-    grid-row: 3 / 9;
+    grid-row: 4 / 10;
     grid-column: 1 / 8;
 
     display: grid;
@@ -165,48 +173,52 @@ template.innerHTML = `
 
     justify-items: center;
     align-items: center;
+    text-align: center;
 }
 
 .day {
-    grid-row: 1 / 2;
-    grid-column: 1 / 2;
-
     display: inline-block;
     padding: .8em;
-    line-height: 1;
+
+    width: 18px;
+    height: 18px;
+
+    color: rgba(255, 255, 255, .2);
 
     background-color: transparent;
     border-radius: 50%;
     border: 1px solid transparent;
 
-    transition: background-color .15s linear, border .1s linear;
     cursor: pointer;
+    user-select: none;
+    pointer-events: none;
+}
+
+.current-month {
+    color: rgba(255, 255, 255, .8);
+    pointer-events: auto;
+}
+
+.current-day {
+    border: 1px solid rgba(255, 255, 255, .8);
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, .08);
 }
 
 .day:hover {
+    color: rgba(255, 255, 255, .8);
     border: 1px solid #ededed;
     border-radius: 50%;
     background-color: #6841da;
-
-}
-
-.another {
-    grid-column: 2 / 3;
-}
-
-.current {
-    color: rgba(255, 255, 255, .8);
-    border: 1px solid rgba(255, 255, 255, .8);
-    border-radius: 50%;
 }
 </style>
 <div class="calendar-container">
         <div class="calendar-background"></div>
-        <input  class="date-input" type="text" placeholder="29/09/2021">
-
+        <span class="calendar__date-label">dd/mm/yyyy</span>
         <div class="calendar">
+            <input  class="date-input" type="text" placeholder="dd/mm/yyyy">
             <div class="calendar-header">
-                <button class="changeMonth prev">
+                <button class="changeMonth prev" id="prevBtn">
                     <svg class="btn-icon" viewBox="0 0 512.002 512.002">
                         <path
                             d="M388.425,241.951L151.609,5.79c-7.759-7.733-20.321-7.72-28.067,0.04c-7.74,7.759-7.72,20.328,0.04,28.067l222.72,222.105 L123.574,478.106c-7.759,7.74-7.779,20.301-0.04,28.061c3.883,3.89,8.97,5.835,14.057,5.835c5.074,0,10.141-1.932,14.017-5.795
@@ -214,7 +226,7 @@ template.innerHTML = `
                         </svg>
                 </button>
                 <div class="current-date">12 December 2021</div>
-                <button class="changeMonth">
+                <button class="changeMonth" id="nextBtn">
                     <svg class="btn-icon" viewBox="0 0 512.002 512.002">
                         <path d="M388.425,241.951L151.609,5.79c-7.759-7.733-20.321-7.72-28.067,0.04c-7.74,7.759-7.72,20.328,0.04,28.067l222.72,222.105
                                         			L123.574,478.106c-7.759,7.74-7.779,20.301-0.04,28.061c3.883,3.89,8.97,5.835,14.057,5.835c5.074,0,10.141-1.932,14.017-5.795
@@ -233,8 +245,6 @@ template.innerHTML = `
             </div>
 
             <div class="days">
-                <span class="day">12</span>
-                <span class="day another current">13</span>
             </div>
         </div>
     </div>
@@ -244,28 +254,136 @@ export default class Calendar extends HTMLElement {
     constructor() {
         super();
         this.daysInCalendar = 42;
-        this.currentDate = new Date();
-        this.currentYear = this.currentDate.getFullYear();
-        this.currentMonth = this.currentDate.getMonth + 1;
+        this.date = new Date();
+        this.currentYear = this.date.getFullYear();
+        this.currentMonth = this.date.getMonth();
+        this.currentDate = this.date.getDate();
+        this.monthIncrement = 0;
         this.attachShadow({mode: 'open'});
 
         this.shadowRoot.appendChild(template.content.cloneNode(true));
+
+        this.dateLabel = this.shadowRoot.querySelector('.calendar__date-label');
+
+        this.calendar = this.shadowRoot.querySelector('.calendar');
+        this.dateInput = this.calendar.querySelector('.date-input');
+        this.calendarCurrentDate = this.calendar.querySelector('.current-date');
+        this.calendarBackground = this.shadowRoot.querySelector('.calendar-background');
+        this.days = this.calendar.querySelector('.days');
+
+
+        this.nextBtn = this.calendar.querySelector('#nextBtn');
+        this.prevBtn = this.calendar.querySelector('#prevBtn');
     }
-
-
 
     connectedCallback() {
-        this.shadowRoot.querySelector('.date-input').addEventListener('focus', () => {
-            this.shadowRoot.querySelector('.calendar').style.display = 'grid';
-        });
+        this.dateLabel.addEventListener('click', () => {
+            this.monthIncrement = 0;
+            this.showCalendar(this.calendar, this.calendarBackground);
+            this.displayMonth();
+         });
+         this.calendarBackground.addEventListener('click', () => {
+             this.closeCalendar(this.calendar, this.calendarBackground);
+         });
 
-        this.shadowRoot.querySelector('.calendar-background').addEventListener('click', () => {
-            this.shadowRoot.querySelector('.calendar').style.display = 'none';
+         this.nextBtn.addEventListener('click', () => {
+             this.monthIncrement++;
+             this.displayMonth();
+         });
+         this.prevBtn.addEventListener('click', () => {
+             this.monthIncrement--;
+             this.displayMonth();
+         });
+
+        this.days.addEventListener('click', (events) => {
+            if(events.target.className.includes('current-month')) {
+                this.setDateInput(this.dateInput, this.dateLabel, events.target.textContent);
+            }
         });
     }
 
-    showCalendar() {
+    clearDates() {
+        this.days.innerHTML = '';
+        this.calendarCurrentDate.textContent = '';
+    }
 
+    displayMonth() {
+        this.clearDates();
+        this.displayCurrentDate();
+        let daysFromPrevMonth = this.countOfDaysFromPrevMonth();
+        let daysInThisMonth = this.daysInMonth();
+        let daysIncrement = 1;
+        let nextMonthDays = 1;
+        for(let i = 0; i < 6; i++) {
+            for(let j = 0; j < 7; j++) {
+                let span = document.createElement('span');
+                span.style.gridRow = `${i + 1} / ${i + 2}`;
+                span.style.gridColumn = `${j + 1} / ${j + 2}`;
+                span.classList += 'day';
+                if(daysFromPrevMonth >= 0) {
+                    span.textContent = this.datesFromPrevMonth(daysFromPrevMonth);
+                    daysFromPrevMonth--;
+                } else {
+                    if(daysIncrement <= daysInThisMonth) {
+                        span.textContent = daysIncrement;
+                        span.classList += ' current-month';
+                        if(this.currentDate === daysIncrement && this.monthIncrement === 0) {
+                            span.classList += ' current-day';
+                        }
+                        daysIncrement++;
+                    }
+                    else {
+                        span.textContent = nextMonthDays;
+                        nextMonthDays++;
+                    }
+                }
+                this.days.appendChild(span);
+            }
+
+        }
+    }
+
+
+
+
+    displayCurrentDate() {
+        let date = new Date(this.currentYear, this.currentMonth + 1 + this.monthIncrement, 0);
+        this.calendarCurrentDate.textContent = date.toLocaleDateString('en-us', {
+            year: 'numeric',
+            month: 'long'
+        });
+    }
+
+    setDateInput(dateInput, dateLabel, text) {
+        let date = new Date(this.currentYear, this.currentMonth + 1 + this.monthIncrement, 0);
+        let month = date.getMonth();
+        let year = date.getFullYear();
+        let outputDate = `${text}/${month+ 1}/${year}`;
+
+        dateInput.value = outputDate;
+        dateLabel.textContent = outputDate;
+    }
+
+    countOfDaysFromPrevMonth() {
+        return new Date(this.currentYear, this.currentMonth + this.monthIncrement, 0).getDay();
+    }
+
+    datesFromPrevMonth(countOfDays) {
+        return new Date(this.currentYear, this.currentMonth + this.monthIncrement, -countOfDays).getDate();
+    }
+
+    daysInMonth() {
+        return new Date(this.currentYear, this.currentMonth + 1 + this.monthIncrement, 0).getDate();
+    }
+
+    showCalendar(calendar, background) {
+        calendar.style.display = 'grid';
+        background.style.display = 'block';
+    }
+
+    closeCalendar(calendar, background) {
+        calendar.style.display = 'none';
+        background.style.display = 'none';
     }
 
 
