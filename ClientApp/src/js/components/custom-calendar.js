@@ -31,10 +31,12 @@ template.innerHTML = `
 .calendar {
     display: none;
     grid-template-columns: repeat(7, var(--column-widht));
-    grid-template-rows: repeat(9, var(--row-height));
+    grid-template-rows: repeat(8, var(--row-height));
 
     align-items: center;
     justify-items: center;
+
+    padding-top: 1em;
 
     position: fixed;
     bottom: 8px;
@@ -47,27 +49,8 @@ template.innerHTML = `
     box-shadow: 0 0 5px #6841da;
 }
 
-.date-input {
-    grid-row: 1 / 2;
-    grid-column: span 7;
-    padding: 1em;
-
-    justify-self: flex-start;
-
-    font-size: 1em;
-    font-weight: normal;
-    color: rgba(255, 255, 255, .75);
-
-    background-color: transparent;
-    border: none;
-    outline: none;
-    box-sizing: border-box;
-
-    cursor: pointer;
-}
-
 .calendar-header {
-    grid-row: 2 / 3;
+    grid-row: 1 / 2;
     grid-column: span 7;
 
     display: flex;
@@ -117,7 +100,7 @@ template.innerHTML = `
 
 
 .weekdays {
-    grid-row: 3 / 4;
+    grid-row: 2 / 3;
     grid-column: span 7;
 
     display: grid;
@@ -164,7 +147,7 @@ template.innerHTML = `
 }
 
 .days {
-    grid-row: 4 / 10;
+    grid-row: 3 / 9;
     grid-column: 1 / 8;
 
     display: grid;
@@ -205,7 +188,8 @@ template.innerHTML = `
     background-color: rgba(255, 255, 255, .08);
 }
 
-.day:hover {
+.day:hover,
+.selected-day {
     color: rgba(255, 255, 255, .8);
     border: 1px solid #ededed;
     border-radius: 50%;
@@ -216,7 +200,6 @@ template.innerHTML = `
         <div class="calendar-background"></div>
         <span class="calendar__date-label">dd/mm/yyyy</span>
         <div class="calendar">
-            <input  class="date-input" type="text" placeholder="dd/mm/yyyy">
             <div class="calendar-header">
                 <button class="changeMonth prev" id="prevBtn">
                     <svg class="btn-icon" viewBox="0 0 512.002 512.002">
@@ -266,11 +249,12 @@ export default class Calendar extends HTMLElement {
         this.dateLabel = this.shadowRoot.querySelector('.calendar__date-label');
 
         this.calendar = this.shadowRoot.querySelector('.calendar');
-        this.dateInput = this.calendar.querySelector('.date-input');
         this.calendarCurrentDate = this.calendar.querySelector('.current-date');
         this.calendarBackground = this.shadowRoot.querySelector('.calendar-background');
         this.days = this.calendar.querySelector('.days');
-
+        this.selectedDate = this.date;
+        this.selectedDay = null;
+        this.prevSelected = null;
 
         this.nextBtn = this.calendar.querySelector('#nextBtn');
         this.prevBtn = this.calendar.querySelector('#prevBtn');
@@ -297,7 +281,15 @@ export default class Calendar extends HTMLElement {
 
         this.days.addEventListener('click', (events) => {
             if(events.target.className.includes('current-month')) {
-                this.setDateInput(this.dateInput, this.dateLabel, events.target.textContent);
+                this.setDateLabel(this.dateLabel, events.target.textContent);
+                if(this.selectedDay !== null) {
+                    this.selectedDay.classList.remove('selected-day');
+                    this.selectedDay = events.target;
+                    this.selectedDay.classList.add('selected-day');
+                } else {
+                    this.selectedDay = events.target;
+                    this.selectedDay.classList.add('selected-day');
+                }
             }
         });
     }
@@ -309,7 +301,7 @@ export default class Calendar extends HTMLElement {
 
     displayMonth() {
         this.clearDates();
-        this.displayCurrentDate();
+        this.displayCurrentDateInCalendarHeader();
         let daysFromPrevMonth = this.countOfDaysFromPrevMonth();
         let daysInThisMonth = this.daysInMonth();
         let daysIncrement = 1;
@@ -326,9 +318,9 @@ export default class Calendar extends HTMLElement {
                 } else {
                     if(daysIncrement <= daysInThisMonth) {
                         span.textContent = daysIncrement;
-                        span.classList += ' current-month';
+                        span.classList.add('current-month');
                         if(this.currentDate === daysIncrement && this.monthIncrement === 0) {
-                            span.classList += ' current-day';
+                            span.classList.add('current-day');
                         }
                         daysIncrement++;
                     }
@@ -346,7 +338,7 @@ export default class Calendar extends HTMLElement {
 
 
 
-    displayCurrentDate() {
+    displayCurrentDateInCalendarHeader() {
         let date = new Date(this.currentYear, this.currentMonth + 1 + this.monthIncrement, 0);
         this.calendarCurrentDate.textContent = date.toLocaleDateString('en-us', {
             year: 'numeric',
@@ -354,15 +346,16 @@ export default class Calendar extends HTMLElement {
         });
     }
 
-    setDateInput(dateInput, dateLabel, text) {
+    setDateLabel(dateLabel, text) {
         let date = new Date(this.currentYear, this.currentMonth + 1 + this.monthIncrement, 0);
         let month = date.getMonth();
         let year = date.getFullYear();
         let outputDate = `${text}/${month+ 1}/${year}`;
 
-        dateInput.value = outputDate;
         dateLabel.textContent = outputDate;
     }
+
+
 
     countOfDaysFromPrevMonth() {
         return new Date(this.currentYear, this.currentMonth + this.monthIncrement, 0).getDay();
