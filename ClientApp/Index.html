@@ -125,7 +125,7 @@
         </div>
 
         <div class="tasks bordered">
-            <div class="tasks__list">
+            <div class="tasks__list" id="tasks-list">
                 <div class="tasks__item">
                     <div class="tasks-icon">
                         <svg class="task-icon__icon">
@@ -183,7 +183,7 @@
 
 
             </div>
-            <form action="" class="tasks-form">
+            <form action="" class="tasks-form" id="task-form">
                 <input type="text" class="tasks-form__input-title">
                 <textarea class="tasks-form__input-comment" name="" id="" cols="30" rows="10"></textarea>
                 <div class="task-options">
@@ -202,9 +202,9 @@
         </div>
 
         <div class="buttons bordered">
-            <button class="btn">add task</button>
-            <button class="btn">clear fields</button>
-            <button class="btn">close</button>
+            <button class="btn" id="add-task-button">add task</button>
+            <button class="btn" id="clear-field-button">clear fields</button>
+            <button class="btn" id="close-form-button">close</button>
         </div>
     </div>
     <script src="/src/js/app.js" type="module"></script>

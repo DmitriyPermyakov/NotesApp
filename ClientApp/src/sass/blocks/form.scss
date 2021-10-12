@@ -2,10 +2,10 @@
 @import 'tasks.scss';
 
 .tasks-form {
-    grid-column: 2 / 3;
-
+    display: block;
     margin: 0;
     padding: 3em;
+    width: 100%;
 
     border-left: 1px solid $light-gray;
 

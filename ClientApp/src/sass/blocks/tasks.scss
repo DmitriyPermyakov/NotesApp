@@ -4,14 +4,27 @@
     grid-column: 2 / 4;
     grid-row: 3 / 5;
 
-    display: grid;
-    grid-template-columns: 5fr 4fr;
-    grid-template-rows: 1fr;
+    // display: grid;
+    // grid-template-columns: 5fr 4fr;
+    // grid-template-rows: 1fr;
+    display: flex;
+
+    overflow: hidden;
 }
 
 .tasks__list {
-    grid-column: 1 / 2;
+    display: block;
+    width: 100%;
+
+    flex-grow: 1;
+    flex-shrink: 0;
+
     background-color: $dark-bg-color;
+    transition: flex-shrink .5s;
+}
+
+.tasks__list.open-task-list {
+    flex-shrink: 1;
 }
 
 .tasks__item:first-child {
@@ -122,3 +135,4 @@
 .task-menu__icon span + span {
     margin-left: .2em;
 }
+
