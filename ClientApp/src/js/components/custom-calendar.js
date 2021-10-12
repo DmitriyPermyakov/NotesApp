@@ -76,6 +76,7 @@ template.innerHTML = `
     fill:rgba(255, 255, 255, 1);
 }
 
+.clear-date-btn__icon,
 .btn-icon {
     display: inline-block;
     width: 1em;
@@ -195,10 +196,55 @@ template.innerHTML = `
     border-radius: 50%;
     background-color: #6841da;
 }
+
+.calendar__date {
+    display: flex;
+    align-items: center;
+
+}
+
+.calendar__date-label {
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.calendar__date-label:hover {
+    color: rgba(255, 255, 255, 1);
+}
+
+.calendar__clear-date-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+    margin: 0 0 0 .4em;
+
+
+    border: none;
+    outline: none;
+
+    background-color: var(--bg-color);
+    cursor: pointer;
+}
+
+.calendar__clear-date-btn:hover .clear-date-btn__icon {
+    fill:rgba(255, 255, 255, 1);
+}
+
+.clear-date-btn__icon {
+    margin-top: .1em;
+}
+
 </style>
 <div class="calendar-container">
         <div class="calendar-background"></div>
-        <span class="calendar__date-label">dd/mm/yyyy</span>
+        <div class="calendar__date">
+            <span class="calendar__date-label" id="date-label">dd/mm/yyyy</span>
+            <button class="calendar__clear-date-btn" id="clear-date-button">
+                 <svg class="clear-date-btn__icon" viewBox="0 0 24 24"><path d="M 4.9902344 3.9902344 A 1.0001 1.0001 0 0 0 4.2929688 5.7070312 L 10.585938 12 L 4.2929688 18.292969 A 1.0001 1.0001 0 1 0 5.7070312 19.707031 L 12 13.414062 L 18.292969 19.707031 A 1.0001 1.0001 0 1 0 19.707031 18.292969 L 13.414062 12 L 19.707031 5.7070312 A 1.0001 1.0001 0 0 0 18.980469 3.9902344 A 1.0001 1.0001 0 0 0 18.292969 4.2929688 L 12 10.585938 L 5.7070312 4.2929688 A 1.0001 1.0001 0 0 0 4.9902344 3.9902344 z"/></svg>
+            </button>
+        </div>
         <div class="calendar">
             <div class="calendar-header">
                 <button class="changeMonth prev" id="prevBtn">
@@ -249,6 +295,7 @@ export default class Calendar extends HTMLElement {
         this.date = null;
 
         this.dateLabel = this.shadowRoot.querySelector('.calendar__date-label');
+        this.clearDateLabelButton = this.shadowRoot.querySelector('#clear-date-button');
 
         this.calendar = this.shadowRoot.querySelector('.calendar');
         this.calendarCurrentDate = this.calendar.querySelector('.current-date');
@@ -298,6 +345,11 @@ export default class Calendar extends HTMLElement {
                 }
             }
         });
+
+        this.clearDateLabelButton.addEventListener('click', () => {
+            this.dateLabel.textContent = 'dd/mm/yyyy';
+            this.selectedDate = null;
+        })
         this.date = this.setDate();
     }
 
