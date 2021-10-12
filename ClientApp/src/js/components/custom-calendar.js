@@ -237,14 +237,16 @@ export default class Calendar extends HTMLElement {
     constructor() {
         super();
         this.daysInCalendar = 42;
-        this.date = new Date();
-        this.currentYear = this.date.getFullYear();
-        this.currentMonth = this.date.getMonth();
-        this.currentDate = this.date.getDate();
+        this.currentDate = new Date();
+        this.currentYear = this.currentDate.getFullYear();
+        this.currentMonth = this.currentDate.getMonth();
+        this.currentDate = this.currentDate.getDate();
         this.monthIncrement = 0;
         this.attachShadow({mode: 'open'});
 
         this.shadowRoot.appendChild(template.content.cloneNode(true));
+
+        this.date = null;
 
         this.dateLabel = this.shadowRoot.querySelector('.calendar__date-label');
 
@@ -252,8 +254,8 @@ export default class Calendar extends HTMLElement {
         this.calendarCurrentDate = this.calendar.querySelector('.current-date');
         this.calendarBackground = this.shadowRoot.querySelector('.calendar-background');
         this.days = this.calendar.querySelector('.days');
-        this.selectedDate = this.date;
-        this.selectedDay = null;
+        this.selectedDate = null;
+
         this.prevSelected = null;
 
         this.nextBtn = this.calendar.querySelector('#nextBtn');
@@ -263,8 +265,9 @@ export default class Calendar extends HTMLElement {
     connectedCallback() {
         this.dateLabel.addEventListener('click', () => {
             this.monthIncrement = 0;
+            this.date = this.setDate();
             this.showCalendar(this.calendar, this.calendarBackground);
-            this.displayMonth();
+            this.setCalendar(this.date, this.selectedDate);
          });
          this.calendarBackground.addEventListener('click', () => {
              this.closeCalendar(this.calendar, this.calendarBackground);
@@ -272,38 +275,49 @@ export default class Calendar extends HTMLElement {
 
          this.nextBtn.addEventListener('click', () => {
              this.monthIncrement++;
-             this.displayMonth();
+             this.date = this.setDate();
+             this.setCalendar(this.date, this.selectedDate);
          });
          this.prevBtn.addEventListener('click', () => {
              this.monthIncrement--;
-             this.displayMonth();
+             this.date = this.setDate();
+             this.setCalendar(this.date, this.selectedDate);
          });
 
         this.days.addEventListener('click', (events) => {
             if(events.target.className.includes('current-month')) {
-                this.setDateLabel(this.dateLabel, events.target.textContent);
-                if(this.selectedDay !== null) {
-                    this.selectedDay.classList.remove('selected-day');
-                    this.selectedDay = events.target;
-                    this.selectedDay.classList.add('selected-day');
+                this.setDateLabel(this.date, this.dateLabel, events.target.textContent);
+                this.selectedDate = this.setSelectedDate(this.date, events.target.textContent);
+                if(this.prevSelected !== null) {
+                    this.prevSelected.classList.remove('selected-day');
+                    this.prevSelected = events.target;
+                    this.prevSelected.classList.add('selected-day');
                 } else {
-                    this.selectedDay = events.target;
-                    this.selectedDay.classList.add('selected-day');
+                    this.prevSelected = events.target;
+                    this.prevSelected.classList.add('selected-day');
                 }
             }
         });
+        this.date = this.setDate();
     }
 
-    clearDates() {
-        this.days.innerHTML = '';
-        this.calendarCurrentDate.textContent = '';
-    }
-
-    displayMonth() {
+    setCalendar(date, selectedDate) {
         this.clearDates();
-        this.displayCurrentDateInCalendarHeader();
+        this.displayCurrentDateInCalendarHeader(date);
+        this.displayMonth(date, selectedDate);
+    }
+
+    setDate() {
+        return new Date(this.currentYear, this.currentMonth + 1 + this.monthIncrement, 0);
+    }
+
+    setSelectedDate(date, selectedDay) {
+        return new Date(date.getFullYear(), date.getMonth(), selectedDay);
+    }
+
+    displayMonth(date, selectedDate) {
         let daysFromPrevMonth = this.countOfDaysFromPrevMonth();
-        let daysInThisMonth = this.daysInMonth();
+        let daysInThisMonth = this.daysInMonth(date);
         let daysIncrement = 1;
         let nextMonthDays = 1;
         for(let i = 0; i < 6; i++) {
@@ -319,6 +333,7 @@ export default class Calendar extends HTMLElement {
                     if(daysIncrement <= daysInThisMonth) {
                         span.textContent = daysIncrement;
                         span.classList.add('current-month');
+                        this.checkSelectedDay(span, date, selectedDate, daysIncrement);
                         if(this.currentDate === daysIncrement && this.monthIncrement === 0) {
                             span.classList.add('current-day');
                         }
@@ -335,19 +350,27 @@ export default class Calendar extends HTMLElement {
         }
     }
 
+    checkSelectedDay(element, date, selectedDate, day) {
+        if(selectedDate !== null && date.getFullYear() === selectedDate.getFullYear()
+             && date.getMonth() === selectedDate.getMonth() && day === selectedDate.getDate()) {
+                element.classList.add('selected-day');
+        }
+    }
 
 
+    clearDates() {
+        this.days.innerHTML = '';
+        this.calendarCurrentDate.textContent = '';
+    }
 
-    displayCurrentDateInCalendarHeader() {
-        let date = new Date(this.currentYear, this.currentMonth + 1 + this.monthIncrement, 0);
+    displayCurrentDateInCalendarHeader(date) {
         this.calendarCurrentDate.textContent = date.toLocaleDateString('en-us', {
             year: 'numeric',
             month: 'long'
         });
     }
 
-    setDateLabel(dateLabel, text) {
-        let date = new Date(this.currentYear, this.currentMonth + 1 + this.monthIncrement, 0);
+    setDateLabel(date, dateLabel, text) {
         let month = date.getMonth();
         let year = date.getFullYear();
         let outputDate = `${text}/${month+ 1}/${year}`;
@@ -355,7 +378,9 @@ export default class Calendar extends HTMLElement {
         dateLabel.textContent = outputDate;
     }
 
-
+    daysInMonth(date) {
+        return date.getDate();
+    }
 
     countOfDaysFromPrevMonth() {
         return new Date(this.currentYear, this.currentMonth + this.monthIncrement, 0).getDay();
@@ -363,10 +388,6 @@ export default class Calendar extends HTMLElement {
 
     datesFromPrevMonth(countOfDays) {
         return new Date(this.currentYear, this.currentMonth + this.monthIncrement, -countOfDays).getDate();
-    }
-
-    daysInMonth() {
-        return new Date(this.currentYear, this.currentMonth + 1 + this.monthIncrement, 0).getDate();
     }
 
     showCalendar(calendar, background) {
@@ -378,8 +399,6 @@ export default class Calendar extends HTMLElement {
         calendar.style.display = 'none';
         background.style.display = 'none';
     }
-
-
 }
 
 customElements.define('custom-calendar', Calendar);
