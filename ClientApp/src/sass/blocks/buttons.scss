@@ -9,6 +9,8 @@
     align-items: center;
 
     font-size: 1rem;
+
+    overflow: hidden;
 }
 
 .btn {
@@ -19,6 +21,7 @@
 
     border: none;
     border-radius: 3em;
+    outline: none;
 
     font-weight: bold;
     color: $hovered;
@@ -34,4 +37,22 @@
 .btn:hover {
     border: 1px solid $hovered;
 }
+
+.add-task-btn {
+    transform: translate(125%);
+}
+
+.clear-field-btn {
+    transform: translate(400%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.close-form-btn {
+    transform: translate(400%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+
 

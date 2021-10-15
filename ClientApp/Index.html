@@ -43,9 +43,10 @@
         </symbol>
     </svg>
     <div class="container bordered">
-
+        <!--Title-->
         <div class="title bordered"><h1>task manager</h1></div>
 
+        <!--Search and filter-->
         <div class="search-and-filter bordered">
             <div class="search">
                 <svg class="search-icon">
@@ -61,6 +62,7 @@
             </div>
         </div>
 
+        <!--Account-->
         <div class="account bordered">
             <div class="profile">
                 <image class="profile__avatar" src="dist/assets/img/icons/bussiness-man.svg" alt="avatar"></image>
@@ -96,6 +98,7 @@
             </div>
         </div>
 
+        <!--Calendar-->
         <div class="calendar-container bordered">
             <button class="calendar__next-btn">
                 <svg class="next-btn__icon left">
@@ -113,6 +116,7 @@
             </button>
         </div>
 
+        <!--Tags-->
         <div class="tags bordered">
             <h2 class="tags-title">tags</h2>
             <ul class="tags-list">
@@ -124,6 +128,7 @@
             </ul>
         </div>
 
+        <!--Tasks-->
         <div class="tasks bordered">
             <div class="tasks__list" id="tasks-list">
                 <div class="tasks__item">
@@ -180,9 +185,9 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
+
+            <!--Form-->
             <form action="" class="tasks-form" id="task-form">
                 <input type="text" class="tasks-form__input-title">
                 <textarea class="tasks-form__input-comment" name="" id="" cols="30" rows="10"></textarea>
@@ -201,10 +206,11 @@
             </form>
         </div>
 
+        <!--Buttons-->
         <div class="buttons bordered">
-            <button class="btn" id="add-task-button">add task</button>
-            <button class="btn" id="clear-field-button">clear fields</button>
-            <button class="btn" id="close-form-button">close</button>
+            <button class="btn add-task-btn" id="add-task-button">add task</button>
+            <button class="btn clear-field-btn" id="clear-field-button">clear fields</button>
+            <button class="btn close-form-btn" id="close-form-button">close</button>
         </div>
     </div>
     <script src="/src/js/app.js" type="module"></script>
