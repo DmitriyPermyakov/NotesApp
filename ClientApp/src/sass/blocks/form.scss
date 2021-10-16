@@ -28,7 +28,7 @@
     font-family: 'Roboto', sans-serif;
     font-size: .85rem;
     font-weight: bold;
-    color: $light-gray;
+    color: $text-color;
 }
 
 .tasks-form__input-title:focus,
@@ -51,7 +51,7 @@
     font-family: 'Roboto', sans-serif;
     font-size: .85rem;
     font-weight: bold;
-    color: $light-gray;
+    color: $text-color;
 
     resize: none;
 }
@@ -61,19 +61,41 @@
     box-shadow: 0 0 5px  $purple;
 }
 
-.dates {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+.task-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    row-gap: 1em;
 
-    padding: .5em 1em;
-    font-size: 1rem;
+    align-items: center;
+    justify-items: start;
+
+    padding-top: 2.5em;
+    font-size: 1em;
 }
 
-.dates__item {
+.dates {
+    grid-row: 1 / 2;
+
     display: flex;
     align-items: baseline;
     justify-content: center;
+
+    padding: 0 0 0 3em;
+}
+
+.dates > label {
+    margin-right: .5em;
+}
+
+.dates__start {
+    grid-column: 1 / 2;
+}
+
+.dates__end {
+    grid-column: 2 / 3;
+    justify-self: end;
+    padding: 0 3em 0 0;
 }
 
 .dates__item:hover {
@@ -82,6 +104,56 @@
 
 .dates__item label {
     margin-right: .5em;
-    font-size: .85em;
     text-transform: capitalize;
+}
+
+.remind {
+    grid-row: 2 / 3;
+    grid-column: 1 / 2;
+
+    display: flex;
+    padding: 0 0 0 3.2em;
+    font-size: .9em;
+}
+
+.remind-list {
+    display: inline;
+    margin-left: .5em;
+
+    color: $text-color;
+    font-weight: normal;
+    font-size: 1em;
+
+    border: none;
+    background-color: $dark-bg-color;
+    outline: none;
+
+    appearance: none;
+    cursor: pointer;
+}
+
+.form-tags {
+    grid-row: 3 / 4;
+    grid-column: 1 / 2;
+
+    display: flex;
+    padding: 0 0 0 3em;
+}
+
+.form-tags-list__label {
+    font-size: .9em;
+}
+
+.form-tags-list {
+    margin-left: .5em;
+
+    font-size: .9em;
+    color: $text-color;
+
+    border: none;
+    background-color: $dark-bg-color;
+
+    outline: none;
+    appearance: none;
+    cursor: pointer;
 }

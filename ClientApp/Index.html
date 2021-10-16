@@ -142,11 +142,9 @@
                         <p class="task-description">It's the best idea i can imagine</p>
                     </div>
                     <div class="task-menu">
-                        <div class="task-menu__icon">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </div>
                 </div>
                 <div class="tasks__item">
@@ -160,11 +158,9 @@
                         <p class="task-description">it's the best idea i can imagine</p>
                     </div>
                     <div class="task-menu">
-                        <div class="task-menu__icon">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </div>
                 </div>
                 <div class="tasks__item">
@@ -178,11 +174,9 @@
                         <p class="task-description">It's the best idea i can imagine</p>
                     </div>
                     <div class="task-menu">
-                        <div class="task-menu__icon">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </div>
                 </div>
             </div>
@@ -192,15 +186,29 @@
                 <input type="text" class="tasks-form__input-title">
                 <textarea class="tasks-form__input-comment" name="" id="" cols="30" rows="10"></textarea>
                 <div class="task-options">
-                    <div class="dates">
-                        <div class="dates__item">
-                            <label>start: </label>
-                            <custom-calendar id="date-from">1231</custom-calendar>
-                        </div>
-                        <div class="dates__item">
-                            <label>end: </label>
-                            <custom-calendar id="date-to">1231</custom-calendar>
-                        </div>
+                    <div class="dates dates__start">
+                        <label>Start:</label>
+                        <custom-calendar id="date-from">1231</custom-calendar>
+                    </div>
+                    <div class="dates dates__end">
+                        <label>End:</label>
+                        <custom-calendar id="date-to">1231</custom-calendar>
+                    </div>
+                    <div class="remind">
+                        <label for="remind-list" class="remind-label">Remind&#160;before: </label>
+                        <select name="remind-list" id="remind-list" class="remind-list">
+                            <option value="">one day</option>
+                            <option value="">two days</option>
+                            <option value="">three days</option>
+                        </select>
+                    </div>
+                    <div class="form-tags">
+                        <label for="form-tags-list" class="form-tags__label">Tag:</label>
+                        <select name="form-tags-list" id="form-tags-list" class="form-tags-list">
+                            <option value="">travelling</option>
+                            <option value="">institute</option>
+                            <option value="">programming</option>
+                        </select>
                     </div>
                 </div>
             </form>
