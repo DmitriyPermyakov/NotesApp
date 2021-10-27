@@ -48,7 +48,7 @@ let clearFieldsKeyframe = new KeyframeEffect(clearFieldsBtn,
         pointerEvents: [ 'auto', 'none' ]
     },
     {
-        duration: 300,
+        duration: 200,
         fill: 'backwards',
         direction: 'normal',
         delay: 0,
@@ -61,10 +61,10 @@ let closeFormKeyframe = new KeyframeEffect(closeFormBtn,
         pointerEvents: [ 'auto', 'none' ]
     },
     {
-        duration: 300,
+        duration: 200,
         fill: 'backwards',
         direction: 'normal',
-        endDelay: 200,
+        endDelay: 100,
     });
 
 let addTaskBtnAnimation = new Animation(addTaskKeyframe, document.timeline);
