@@ -35,13 +35,6 @@
             </g>
         </symbol>
     </svg>
-    <svg style="display: none;">
-        <symbol id="checked" viewBox="0 0 515.556 515.556">
-            <g>
-                <path d="m0 274.226 176.549 176.886 339.007-338.672-48.67-47.997-290.337 290-128.553-128.552z"/>
-            </g>
-        </symbol>
-    </svg>
     <div class="container bordered">
         <!--Title-->
         <div class="title bordered"><h1>task manager</h1></div>
@@ -131,54 +124,6 @@
         <!--Tasks-->
         <div class="tasks bordered">
             <div class="tasks__list" id="tasks-list">
-                <div class="tasks__item">
-                    <div class="tasks-icon">
-                        <svg class="task-icon__icon">
-                            <use xlink:href="#checked"></use>
-                        </svg>
-                    </div>
-                    <div class="task-body">
-                        <h3 class="task-title">Make the best  app in the world</h3>
-                        <p class="task-description">It's the best idea i can imagine</p>
-                    </div>
-                    <div class="task-menu">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </div>
-                <div class="tasks__item">
-                    <div class="tasks-icon">
-                        <svg class="task-icon__icon">
-                            <use xlink:href="#checked"></use>
-                        </svg>
-                    </div>
-                    <div class="task-body">
-                        <h3 class="task-title">make the best  app in the world</h3>
-                        <p class="task-description">it's the best idea i can imagine</p>
-                    </div>
-                    <div class="task-menu">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </div>
-                <div class="tasks__item">
-                    <div class="tasks-icon">
-                        <svg class="task-icon__icon">
-                            <use xlink:href="#checked"></use>
-                        </svg>
-                    </div>
-                    <div class="task-body">
-                        <h3 class="task-title">Make the best  app in the world</h3>
-                        <p class="task-description">It's the best idea i can imagine</p>
-                    </div>
-                    <div class="task-menu">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </div>
             </div>
 
             <!--Form-->
@@ -221,6 +166,28 @@
             <button class="btn close-form-btn" id="close-form-button">close</button>
         </div>
     </div>
+    <template id="task-item">
+        <div class="tasks__item">
+            <div class="tasks-icon">
+                <svg class="task-icon__icon" >
+                    <symbol id="checked" viewBox="0 0 515.556 515.556">
+                        <g>
+                            <path d="m0 274.226 176.549 176.886 339.007-338.672-48.67-47.997-290.337 290-128.553-128.552z" />
+                        </g>
+                    </symbol>
+                </svg>
+            </div>
+            <div class="task-body">
+                <h3 class="task-title">Make the best  app in the world</h3>
+                <p class="task-description">It's the best idea i can imagine</p>
+            </div>
+            <div class="task-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </template>
     <script src="/src/js/app.js" type="module"></script>
 </body>
 </html>
