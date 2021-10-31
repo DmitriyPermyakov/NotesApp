@@ -1,4 +1,4 @@
-import { ButtonAnimation } from "./components/button-animation.js";
+import { ButtonAnimation } from "./classes/button-animation.js";
 
 const addTaskBtn = document.querySelector('#add-task-button');
 const clearFieldsBtn = document.querySelector('#clear-field-button');
