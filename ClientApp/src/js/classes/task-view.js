@@ -1,10 +1,12 @@
+import dataServices from "./data-services";
+
 export class TaskView {
-    task;
-    constructor(task) {
-        this.task = task;
+    taskList;
+    constructor(taskList) {
+        this.taskList = taskList;
     }
 
-    drawTask(taskList) {
+    #createTaskItem() {
         let taskItem = document.createElement('task-item');
 
         let taskItemTitle = document.createElement('div');
@@ -20,4 +22,17 @@ export class TaskView {
 
         taskList.appendChild(taskItem);
     }
+
+    drawAllTasks(tasks) {
+        this.taskList.innerHTML = "";
+
+        if(tasks.length == 0) return;
+
+        tasks.forEach(task => this.#createTaskItem(task));
+    }
+
+    drawTask(task) {
+        this.#createTaskItem(task);
+    }
+
 }
