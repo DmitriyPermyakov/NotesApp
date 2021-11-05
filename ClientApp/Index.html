@@ -127,32 +127,33 @@
             </div>
 
             <!--Form-->
-            <form action="" class="tasks-form" id="task-form">
-                <input type="text" class="tasks-form__input-title">
-                <textarea class="tasks-form__input-comment" name="" id="" cols="30" rows="10"></textarea>
+            <form action="" class="tasks-form" id="task-form" name="taskForm">
+                <input type="text" class="tasks-form__input-title"  name="titleInput" required>
+                <textarea class="tasks-form__input-comment" name="descriptionInput" id="" cols="30" rows="10" required maxlength="500" ></textarea>
                 <div class="task-options">
                     <div class="dates dates__start">
                         <label>Start:</label>
-                        <custom-calendar id="date-from">1231</custom-calendar>
+                        <custom-calendar id="date-from"></custom-calendar>
                     </div>
                     <div class="dates dates__end">
                         <label>End:</label>
-                        <custom-calendar id="date-to">1231</custom-calendar>
+                        <custom-calendar id="date-to" ></custom-calendar>
                     </div>
                     <div class="remind">
                         <label for="remind-list" class="remind-label">Remind&#160;before: </label>
-                        <select name="remind-list" id="remind-list" class="remind-list">
-                            <option value="">one day</option>
-                            <option value="">two days</option>
-                            <option value="">three days</option>
+                        <select name="remindList" id="remind-list" class="remind-list">
+                            <option value="never">never</option>
+                            <option value="one day">one day</option>
+                            <option value="two days">two days</option>
+                            <option value="three days">three days</option>
                         </select>
                     </div>
                     <div class="form-tags">
                         <label for="form-tags-list" class="form-tags__label">Tag:</label>
-                        <select name="form-tags-list" id="form-tags-list" class="form-tags-list">
-                            <option value="">travelling</option>
-                            <option value="">institute</option>
-                            <option value="">programming</option>
+                        <select name="formTagsList" id="form-tags-list" class="form-tags-list">
+                            <option value="travelling">travelling</option>
+                            <option value="institute">institute</option>
+                            <option value="programming">programming</option>
                         </select>
                     </div>
                 </div>

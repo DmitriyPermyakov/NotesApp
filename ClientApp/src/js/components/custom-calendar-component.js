@@ -280,6 +280,7 @@ template.innerHTML = `
 `;
 
 export default class Calendar extends HTMLElement {
+    value;
     constructor() {
         super();
         this.daysInCalendar = 42;
@@ -293,6 +294,7 @@ export default class Calendar extends HTMLElement {
         this.shadowRoot.appendChild(template.content.cloneNode(true));
 
         this.date = null;
+
 
         this.dateLabel = this.shadowRoot.querySelector('.calendar__date-label');
         this.clearDateLabelButton = this.shadowRoot.querySelector('#clear-date-button');
@@ -425,9 +427,10 @@ export default class Calendar extends HTMLElement {
     setDateLabel(date, dateLabel, text) {
         let month = date.getMonth();
         let year = date.getFullYear();
-        let outputDate = `${text}/${month+ 1}/${year}`;
+        let outputDate = `${text}/${month + 1}/${year}`;
 
         dateLabel.textContent = outputDate;
+        this.value = `${year}/${month + 1}/${text}`;
     }
 
     daysInMonth(date) {

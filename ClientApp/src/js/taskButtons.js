@@ -1,13 +1,12 @@
 import { ButtonAnimation } from "./classes/button-animation.js";
+import { addTaskBtn, clearFieldsBtn, closeFormBtn, taskList } from "./documentVariables.js";
+import  TaskView  from "./classes/task-view.js";
+import  TaskService  from "./classes/task-service.js";
 
-const addTaskBtn = document.querySelector('#add-task-button');
-const clearFieldsBtn = document.querySelector('#clear-field-button');
-const closeFormBtn = document.querySelector('#close-form-button');
-
-const taskList = document.querySelector('#tasks-list');
-const taskItem = document.querySelector('#task-item');
 
 const buttonAnimation = new ButtonAnimation(addTaskBtn, clearFieldsBtn, closeFormBtn);
+const taskView = new TaskView(taskList);
+const taskService = new TaskService(taskView);
 
 addTaskBtn.addEventListener('click', openForm);
 closeFormBtn.addEventListener('click', closeForm )
@@ -22,11 +21,12 @@ function openForm() {
 function closeForm() {
     taskList.classList.remove('open-task-list');
     buttonAnimation.closeButtons();
+    addTaskBtn.removeEventListener('click', addTaskItem);
     addTaskBtn.addEventListener('click', openForm);
 }
 
 function addTaskItem() {
-
+    taskService.addTask();
 }
 
-export { addTaskBtn, clearFieldsBtn, closeFormBtn }
+export { addTaskBtn, clearFieldsBtn, closeFormBtn };

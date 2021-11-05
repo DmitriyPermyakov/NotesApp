@@ -1,4 +1,4 @@
-export default dataServices = {
+const dataServices = {
     tasks : [],
 
     loadAllTasks() {
@@ -6,7 +6,10 @@ export default dataServices = {
     },
 
     addTask(task) {
-        localStorage.setItem('task')
+        let jsonTask = JSON.stringify(task);
+        console.log(jsonTask);
+        localStorage.setItem('task', jsonTask);
+        return JSON.parse(localStorage.getItem('task'));
     },
 
     changeState() {
@@ -18,3 +21,5 @@ export default dataServices = {
     },
 
 }
+
+export { dataServices };

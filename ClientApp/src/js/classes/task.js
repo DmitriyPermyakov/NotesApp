@@ -6,23 +6,21 @@ export class Task {
     #remindBefore;
     #tags;
 
-    constructor(title, description, dateStart, dateEnd, remindBefore = 'never', tags = []) {
+    constructor(title, description, dateStart, dateEnd, remindBefore, tags) {
         this.title = title;
         this.description = description;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
         this.remindBefore = remindBefore;
-        this.tag = tag;
+        this.tag = tags;
     }
 
     get title() {
         return this.#title;
     }
 
-    set title (value) {
-        if(value == '') {
-            throw new Error('title can\'t be empty');
-        }
+    set title(value) {
+        this.#title = value;
     }
 
     get description() {
@@ -30,9 +28,7 @@ export class Task {
     }
 
     set description(value) {
-        if(value == '') {
-            throw new Error('description can\'t be empty');
-        }
+        this.#description = value;
     }
 
     get dateStart() {
@@ -40,23 +36,15 @@ export class Task {
     }
 
     set dateStart(value) {
-        let date = new Date(value);
-        if(date < Date.now()) {
-            throw new Error('Date can\'t be earlier than now');
-        }
-        this.#dateStart = date;
+        this.#dateStart = value;
     }
 
     get dateEnd() {
-        return this.dateEnd;
+        return this.#dateEnd;
     }
 
     set dateEnd(value) {
-        let date = new Date(value);
-        if(date < Date.now()) {
-            throw new Error('Date can\'t be earlier than now');
-        }
-        this.#dateStart = date;
+        this.#dateEnd = value;
     }
 
     get remindBefore() {
@@ -64,9 +52,6 @@ export class Task {
     }
 
     set remindBefore(value) {
-        if( value !== 'never' || value !== 'one day' || value !== 'two days' || value !== 'three days') {
-            throw new Error('value of remind field has wrong value');
-        }
         this.#remindBefore = value;
     }
 
