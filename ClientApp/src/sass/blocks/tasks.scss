@@ -21,6 +21,8 @@
 
     background-color: $dark-bg-color;
     transition: flex-shrink .5s;
+
+    overflow-x: auto;
 }
 
 .tasks__list.open-task-list {

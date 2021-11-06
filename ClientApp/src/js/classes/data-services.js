@@ -6,6 +6,7 @@ const dataServices = {
     },
 
     addTask(task) {
+        console.log(task);
         let jsonTask = JSON.stringify(task);
         console.log(jsonTask);
         localStorage.setItem('task', jsonTask);

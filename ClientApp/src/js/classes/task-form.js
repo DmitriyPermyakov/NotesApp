@@ -16,7 +16,6 @@ export default class TaskForm {
         this.dateEnd = dateEnd;
         this.remindBefore = remindBefore;
         this.tags = [tags];
-        console.log(dateStart);
     }
 
     get title() {
@@ -56,7 +55,6 @@ export default class TaskForm {
             month: '2-digit',
             day: '2-digit'
         });
-        console.log(this.#dateStartField + "dateField");
     }
 
     get dateEnd() {
@@ -98,7 +96,6 @@ export default class TaskForm {
 
     createTask() {
         let task = new Task(this.title, this.description, this.dateStart, this.dateEnd, this.remindBefore, this.tags);
-        console.log(task);
         return task;
     }
 

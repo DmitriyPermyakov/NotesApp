@@ -12,7 +12,7 @@ export default class TaskService {
     }
 
     addTask() {
-        this.#form = new TaskForm(titleInput.value, descriptionInput.text, dateFrom.value, dateTo.value, remindList.value, tagsList.value);
+        this.#form = new TaskForm(titleInput.value, descriptionInput.value, dateFrom.value, dateTo.value, remindList.value, tagsList.value);
 
         this.#task = this.#form.createTask();
         let createdDbTask = dataServices.addTask(this.#task);

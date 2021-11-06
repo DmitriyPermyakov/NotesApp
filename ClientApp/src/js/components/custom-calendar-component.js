@@ -26,6 +26,7 @@ template.innerHTML = `
     left: 0;
 
     background-color: rgba(0, 0, 0, .6);
+    z-index: 1;
 }
 
 .calendar {
@@ -47,6 +48,7 @@ template.innerHTML = `
     border-radius: .4em;
     background-color: var(--bg-color);
     box-shadow: 0 0 5px #6841da;
+    z-index: 2;
 }
 
 .calendar-header {
@@ -289,8 +291,8 @@ export default class Calendar extends HTMLElement {
         this.currentMonth = this.currentDate.getMonth();
         this.currentDate = this.currentDate.getDate();
         this.monthIncrement = 0;
-        this.attachShadow({mode: 'open'});
 
+        this.attachShadow({mode: 'open'});
         this.shadowRoot.appendChild(template.content.cloneNode(true));
 
         this.date = null;
