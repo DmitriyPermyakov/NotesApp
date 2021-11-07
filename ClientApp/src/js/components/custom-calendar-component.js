@@ -340,7 +340,8 @@ export default class Calendar extends HTMLElement {
                 this.setDateLabel(this.date, this.dateLabel, events.target.textContent);
                 this.selectedDate = this.setSelectedDate(this.date, events.target.textContent);
                 if(this.prevSelected !== null) {
-                    this.prevSelected.classList.remove('selected-day');
+                    this.calendar.querySelector('.selected-day').classList.remove('selected-day');
+
                     this.prevSelected = events.target;
                     this.prevSelected.classList.add('selected-day');
                 } else {
@@ -378,29 +379,29 @@ export default class Calendar extends HTMLElement {
         let nextMonthDays = 1;
         for(let i = 0; i < 6; i++) {
             for(let j = 0; j < 7; j++) {
-                let span = document.createElement('span');
-                span.style.gridRow = `${i + 1} / ${i + 2}`;
-                span.style.gridColumn = `${j + 1} / ${j + 2}`;
-                span.classList += 'day';
+                let dayElement = document.createElement('span');
+                dayElement.style.gridRow = `${i + 1} / ${i + 2}`;
+                dayElement.style.gridColumn = `${j + 1} / ${j + 2}`;
+                dayElement.classList += 'day';
                 if(daysFromPrevMonth >= 0) {
-                    span.textContent = this.datesFromPrevMonth(daysFromPrevMonth);
+                    dayElement.textContent = this.datesFromPrevMonth(daysFromPrevMonth);
                     daysFromPrevMonth--;
                 } else {
                     if(daysIncrement <= daysInThisMonth) {
-                        span.textContent = daysIncrement;
-                        span.classList.add('current-month');
-                        this.checkSelectedDay(span, date, selectedDate, daysIncrement);
+                        dayElement.textContent = daysIncrement;
+                        dayElement.classList.add('current-month');
+                        this.checkSelectedDay(dayElement, date, selectedDate, daysIncrement);
                         if(this.currentDate === daysIncrement && this.monthIncrement === 0) {
-                            span.classList.add('current-day');
+                            dayElement.classList.add('current-day');
                         }
                         daysIncrement++;
                     }
                     else {
-                        span.textContent = nextMonthDays;
+                        dayElement.textContent = nextMonthDays;
                         nextMonthDays++;
                     }
                 }
-                this.days.appendChild(span);
+                this.days.appendChild(dayElement);
             }
 
         }
