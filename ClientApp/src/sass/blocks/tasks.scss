@@ -29,5 +29,19 @@
     flex-shrink: 1;
 }
 
+.tasks__list::-webkit-scrollbar {
+    width: .5em;
+    background-color: $dark-bg-color;
+    border-left: 1px solid $light-gray;
+}
+
+.tasks__list::-webkit-scrollbar-thumb {
+    border-left: 1px solid $light-gray;
+    background-color: $light-gray;
+    box-shadow: inset -1px 0 0 0 $dark-bg-color, inset 1px 0 0 0 $dark-bg-color;
+}
+
+
+
 
 
