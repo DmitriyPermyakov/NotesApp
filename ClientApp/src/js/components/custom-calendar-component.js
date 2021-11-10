@@ -238,6 +238,10 @@ template.innerHTML = `
     margin-top: .1em;
 }
 
+.not-available {
+    pointer-events: none;
+}
+
 </style>
 <div class="calendar-container">
         <div class="calendar-background"></div>
@@ -282,20 +286,24 @@ template.innerHTML = `
 `;
 
 export default class Calendar extends HTMLElement {
-    value;
+    value = 'dd/mm/yyyy';
     constructor() {
         super();
         this.daysInCalendar = 42;
         this.currentDate = new Date();
+        this.currentDate.setHours(0, 0, 0 , 0, 0);
+
         this.currentYear = this.currentDate.getFullYear();
         this.currentMonth = this.currentDate.getMonth();
-        this.currentDate = this.currentDate.getDate();
+        this.currentDay = this.currentDate.getDate();
         this.monthIncrement = 0;
 
         this.attachShadow({mode: 'open'});
         this.shadowRoot.appendChild(template.content.cloneNode(true));
 
         this.date = null;
+
+        this.isDefaultValue = true;
 
 
         this.dateLabel = this.shadowRoot.querySelector('.calendar__date-label');
@@ -337,10 +345,10 @@ export default class Calendar extends HTMLElement {
 
         this.days.addEventListener('click', (events) => {
             if(events.target.className.includes('current-month')) {
-                this.setDateLabel(this.date, this.dateLabel, events.target.textContent);
                 this.selectedDate = this.setSelectedDate(this.date, events.target.textContent);
+                this.setDateLabel(this.date, this.dateLabel, events.target.textContent);
                 if(this.prevSelected !== null) {
-                    this.calendar.querySelector('.selected-day').classList.remove('selected-day');
+                    this.calendar.querySelector('.selected-day')?.classList.remove('selected-day');
 
                     this.prevSelected = events.target;
                     this.prevSelected.classList.add('selected-day');
@@ -354,6 +362,8 @@ export default class Calendar extends HTMLElement {
         this.clearDateLabelButton.addEventListener('click', () => {
             this.dateLabel.textContent = 'dd/mm/yyyy';
             this.selectedDate = null;
+            this.isDefaultValue = true;
+            this.dateSetted(this);
         })
         this.date = this.setDate();
     }
@@ -391,9 +401,13 @@ export default class Calendar extends HTMLElement {
                         dayElement.textContent = daysIncrement;
                         dayElement.classList.add('current-month');
                         this.checkSelectedDay(dayElement, date, selectedDate, daysIncrement);
-                        if(this.currentDate === daysIncrement && this.monthIncrement === 0) {
+                        if(this.currentDay === daysIncrement && this.monthIncrement === 0) {
                             dayElement.classList.add('current-day');
                         }
+                        if(this.currentDay > daysIncrement && this.monthIncrement === 0 || this.currentDate > this.date) {
+                            dayElement.classList.add('not-available');
+                        }
+
                         daysIncrement++;
                     }
                     else {
@@ -434,6 +448,13 @@ export default class Calendar extends HTMLElement {
 
         dateLabel.textContent = outputDate;
         this.value = `${year}/${month + 1}/${text}`;
+        this.isDefaultValue = false;
+        this.dateSetted(this);
+    }
+
+    dateSetted(target) {
+        const event = new CustomEvent('date-setted', null);
+        target.dispatchEvent(event);
     }
 
     daysInMonth(date) {

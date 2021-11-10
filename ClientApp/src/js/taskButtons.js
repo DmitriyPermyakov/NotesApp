@@ -1,12 +1,14 @@
 import { ButtonAnimation } from "./classes/button-animation.js";
-import { addTaskBtn, clearFieldsBtn, closeFormBtn, taskList } from "./documentVariables.js";
+import { addTaskBtn, clearFieldsBtn, closeFormBtn, taskList, titleInput, descriptionInput, dateFrom, dateTo, remindList, tagsList } from "./documentVariables.js";
 import  TaskView  from "./classes/task-view.js";
 import  TaskService  from "./classes/task-service.js";
+import { Validation } from "./classes/validation.js";
 
 
 const buttonAnimation = new ButtonAnimation(addTaskBtn, clearFieldsBtn, closeFormBtn);
 const taskView = new TaskView(taskList);
 const taskService = new TaskService(taskView);
+const validator = new Validation(titleInput, descriptionInput, dateFrom, dateTo, remindList, tagsList);
 
 addTaskBtn.addEventListener('click', openForm);
 closeFormBtn.addEventListener('click', closeForm )

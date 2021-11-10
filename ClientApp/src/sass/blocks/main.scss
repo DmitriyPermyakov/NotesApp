@@ -34,3 +34,10 @@ body {
 .bordered {
     border: 1px solid $light-gray;
 }
+
+.invalidField,
+.invalidField:focus,
+.invalidField:hover,
+.invalidField:active {
+    box-shadow: 0 0 2px 0 red !important;
+}
