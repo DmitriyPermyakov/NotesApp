@@ -19,6 +19,8 @@
 
 .tags-list {
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
     flex-wrap: wrap;
 
     margin: 0;
@@ -28,15 +30,114 @@
     font-size: .7em;
     font-weight: 300;
     color:$hovered;
-
 }
 
 .tags-list__item {
+    display: flex;
+    align-items: center;
     margin: .2em .3em;
     padding: .1em 1em;
     line-height: 1.4;
     border-radius: 1em;
     background-color:mediumorchid;
+}
+
+.tags-list__remove-btn {
+    display: block;
+    width: 12px;
+    height: 12px;
+
+    background: none;
+    border: none;
+    outline: none;
+
+    position: relative;
+    cursor: pointer;
+}
+
+.tags-list__remove-btn::before,
+.tags-list__remove-btn::after {
+    content: "";
+    margin-left: .3em;
+    width: 2px;
+    height: 100%;
+    background-color: #d7d7d7;
+    position: absolute;
+}
+
+.tags-list__remove-btn::after {
+    transform: rotate(45deg);
+    top: 0;
+    left: 50%;
+}
+
+.tags-list__remove-btn::before {
+    transform: rotate(-45deg);
+    top: 0;
+    left: 50%;
+}
+
+.tags-list__remove-btn:hover::after {
+    background-color: #fff;
+}
+
+.tags-list__remove-btn:hover::before {
+    background-color: #fff;
+}
+
+
+
+.tags-list__add-tag-btn {
+    display: block;
+    margin-left: .5em;
+    width: 1em;
+    height: 1em;
+    background: none;
+    border: none;
+    outline: none;
+
+    position: relative;
+    cursor: pointer;
+}
+.tags-list__add-tag-btn::after,
+.tags-list__add-tag-btn::before {
+    content: "";
+    width: 2px;
+    height: 100%;
+    background-color: $light-gray;
+    position: absolute;
+}
+
+.tags-list__add-tag-btn:hover::after {
+    background-color: $hovered;
+}
+
+.tags-list__add-tag-btn:hover::before {
+    background-color: $hovered;
+}
+
+.tags-list__add-tag-btn::before {
+    left: 40%;
+    top: 0;
+    transform: rotate(90deg);
+}
+
+.tags-list__add-tag-btn::after {
+    left: 40%;
+    top: 0;
+}
+
+.tag-list__input {
+    display: none;
+    padding: .2em;
+
+    color: $text-color;
+    background-color: $dark-bg-color;
+    border: 1px solid $light-gray;
+    border-radius: 3px;
+    outline: none;
+
+    position: absolute;
 }
 
 
