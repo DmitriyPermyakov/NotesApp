@@ -324,29 +324,29 @@ export default class Calendar extends HTMLElement {
     connectedCallback() {
         this.dateLabel.addEventListener('click', () => {
             this.monthIncrement = 0;
-            this.date = this.setDate();
-            this.showCalendar(this.calendar, this.calendarBackground);
-            this.setCalendar(this.date, this.selectedDate);
+            this.date = this.#setDate();
+            this.#showCalendar(this.calendar, this.calendarBackground);
+            this.#setCalendar(this.date, this.selectedDate);
          });
          this.calendarBackground.addEventListener('click', () => {
-             this.closeCalendar(this.calendar, this.calendarBackground);
+             this.#closeCalendar(this.calendar, this.calendarBackground);
          });
 
          this.nextBtn.addEventListener('click', () => {
              this.monthIncrement++;
-             this.date = this.setDate();
-             this.setCalendar(this.date, this.selectedDate);
+             this.date = this.#setDate();
+             this.#setCalendar(this.date, this.selectedDate);
          });
          this.prevBtn.addEventListener('click', () => {
              this.monthIncrement--;
-             this.date = this.setDate();
-             this.setCalendar(this.date, this.selectedDate);
+             this.date = this.#setDate();
+             this.#setCalendar(this.date, this.selectedDate);
          });
 
         this.days.addEventListener('click', (events) => {
             if(events.target.className.includes('current-month')) {
-                this.selectedDate = this.setSelectedDate(this.date, events.target.textContent);
-                this.setDateLabel(this.date, this.dateLabel, events.target.textContent);
+                this.selectedDate = this.#setSelectedDate(this.date, events.target.textContent);
+                this.#setDateLabel(this.date, this.dateLabel, events.target.textContent);
                 if(this.prevSelected !== null) {
                     this.calendar.querySelector('.selected-day')?.classList.remove('selected-day');
 
@@ -360,31 +360,31 @@ export default class Calendar extends HTMLElement {
         });
 
         this.clearDateLabelButton.addEventListener('click', () => {
-            this.dateLabel.textContent = 'dd/mm/yyyy';
+            this.reset();
             this.selectedDate = null;
             this.isDefaultValue = true;
-            this.dateSetted(this);
+            this.#dateSetted(this);
         })
-        this.date = this.setDate();
+        this.date = this.#setDate();
     }
 
-    setCalendar(date, selectedDate) {
-        this.clearDates();
-        this.displayCurrentDateInCalendarHeader(date);
-        this.displayMonth(date, selectedDate);
+    #setCalendar(date, selectedDate) {
+        this.#clearDates();
+        this.#displayCurrentDateInCalendarHeader(date);
+        this.#displayMonth(date, selectedDate);
     }
 
-    setDate() {
+    #setDate() {
         return new Date(this.currentYear, this.currentMonth + 1 + this.monthIncrement, 0);
     }
 
-    setSelectedDate(date, selectedDay) {
+    #setSelectedDate(date, selectedDay) {
         return new Date(date.getFullYear(), date.getMonth(), selectedDay);
     }
 
-    displayMonth(date, selectedDate) {
-        let daysFromPrevMonth = this.countOfDaysFromPrevMonth();
-        let daysInThisMonth = this.daysInMonth(date);
+    #displayMonth(date, selectedDate) {
+        let daysFromPrevMonth = this.#countOfDaysFromPrevMonth();
+        let daysInThisMonth = this.#daysInMonth(date);
         let daysIncrement = 1;
         let nextMonthDays = 1;
         for(let i = 0; i < 6; i++) {
@@ -394,13 +394,13 @@ export default class Calendar extends HTMLElement {
                 dayElement.style.gridColumn = `${j + 1} / ${j + 2}`;
                 dayElement.classList += 'day';
                 if(daysFromPrevMonth >= 0) {
-                    dayElement.textContent = this.datesFromPrevMonth(daysFromPrevMonth);
+                    dayElement.textContent = this.#datesFromPrevMonth(daysFromPrevMonth);
                     daysFromPrevMonth--;
                 } else {
                     if(daysIncrement <= daysInThisMonth) {
                         dayElement.textContent = daysIncrement;
                         dayElement.classList.add('current-month');
-                        this.checkSelectedDay(dayElement, date, selectedDate, daysIncrement);
+                        this.#checkSelectedDay(dayElement, date, selectedDate, daysIncrement);
                         if(this.currentDay === daysIncrement && this.monthIncrement === 0) {
                             dayElement.classList.add('current-day');
                         }
@@ -421,7 +421,7 @@ export default class Calendar extends HTMLElement {
         }
     }
 
-    checkSelectedDay(element, date, selectedDate, day) {
+    #checkSelectedDay(element, date, selectedDate, day) {
         if(selectedDate !== null && date.getFullYear() === selectedDate.getFullYear()
              && date.getMonth() === selectedDate.getMonth() && day === selectedDate.getDate()) {
                 element.classList.add('selected-day');
@@ -429,19 +429,24 @@ export default class Calendar extends HTMLElement {
     }
 
 
-    clearDates() {
+    #clearDates() {
         this.days.innerHTML = '';
         this.calendarCurrentDate.textContent = '';
     }
 
-    displayCurrentDateInCalendarHeader(date) {
+    #displayCurrentDateInCalendarHeader(date) {
         this.calendarCurrentDate.textContent = date.toLocaleDateString('en-us', {
             year: 'numeric',
             month: 'long'
         });
     }
 
-    setDateLabel(date, dateLabel, text) {
+    reset() {
+        this.value = 'dd/mm/yyyy';
+        this.dateLabel.textContent = 'dd/mm/yyyy';
+    }
+
+    #setDateLabel(date, dateLabel, text) {
         let month = date.getMonth();
         let year = date.getFullYear();
         let outputDate = `${text}/${month + 1}/${year}`;
@@ -449,32 +454,32 @@ export default class Calendar extends HTMLElement {
         dateLabel.textContent = outputDate;
         this.value = `${year}/${month + 1}/${text}`;
         this.isDefaultValue = false;
-        this.dateSetted(this);
+        this.#dateSetted(this);
     }
 
-    dateSetted(target) {
+    #dateSetted(target) {
         const event = new CustomEvent('date-setted', null);
         target.dispatchEvent(event);
     }
 
-    daysInMonth(date) {
+    #daysInMonth(date) {
         return date.getDate();
     }
 
-    countOfDaysFromPrevMonth() {
+    #countOfDaysFromPrevMonth() {
         return new Date(this.currentYear, this.currentMonth + this.monthIncrement, 0).getDay();
     }
 
-    datesFromPrevMonth(countOfDays) {
+    #datesFromPrevMonth(countOfDays) {
         return new Date(this.currentYear, this.currentMonth + this.monthIncrement, -countOfDays).getDate();
     }
 
-    showCalendar(calendar, background) {
+    #showCalendar(calendar, background) {
         calendar.style.display = 'grid';
         background.style.display = 'block';
     }
 
-    closeCalendar(calendar, background) {
+    #closeCalendar(calendar, background) {
         calendar.style.display = 'none';
         background.style.display = 'none';
     }
