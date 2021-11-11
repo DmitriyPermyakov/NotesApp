@@ -444,6 +444,8 @@ export default class Calendar extends HTMLElement {
     reset() {
         this.value = 'dd/mm/yyyy';
         this.dateLabel.textContent = 'dd/mm/yyyy';
+        this.selectedDate = null;
+        this.prevSelected = null;
     }
 
     #setDateLabel(date, dateLabel, text) {
