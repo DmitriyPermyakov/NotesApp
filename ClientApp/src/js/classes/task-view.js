@@ -1,3 +1,5 @@
+import  TaskItem  from '../components/task-item-component.js';
+
 export default class TaskView {
     taskList;
     constructor(taskList) {
@@ -5,8 +7,7 @@ export default class TaskView {
     }
 
     #createTaskItem(task) {
-        let taskItem = document.createElement('task-item');
-
+        let taskItem = new TaskItem(task);
         let taskItemTitle = document.createElement('div');
         taskItemTitle.setAttribute('slot', 'title');
         taskItemTitle.textContent = task.title;

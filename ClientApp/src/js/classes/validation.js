@@ -86,9 +86,9 @@ export class Validation {
             this.#validateTextField(this.#description) &
             this.#compareDates(this.#dateStart, this.#dateEnd)&
             this.#validateReminging(this.#remindBefore) ) {
-                this.#isAllValid = true;
+                this.#isAllFieldsValid = true;
             } else {
-                this.#isAllValid = false;
+                this.#isAllFieldsValid = false;
             }
     }
 

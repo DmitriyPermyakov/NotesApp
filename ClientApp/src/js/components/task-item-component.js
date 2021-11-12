@@ -1,3 +1,7 @@
+import { TaskPopupMenu } from "./task-popup-menu-component.js";
+import { tasksListElem } from "../app.js";
+
+
 const templateTask = document.createElement('template');
 templateTask.innerHTML = `
 <style>
@@ -31,6 +35,23 @@ templateTask.innerHTML = `
 .tasks__item:hover .task-menu span {
     background-color: #e7e8ea;
 }
+
+.selected {
+    background-color: #6841da;
+}
+
+.tasks__item.selected .tasks-icon {
+    background-color: #e7e8ea;
+}
+
+.tasks__item.selected .task-description {
+    color: #e7e8ea;
+}
+
+.tasks__item.selected .task-menu span {
+    background-color: #e7e8ea;
+}
+
 
 .tasks-icon {
     display: inline-block;
@@ -90,6 +111,7 @@ templateTask.innerHTML = `
     justify-content: flex-end;
     align-items: center;
     flex-wrap: nowrap;
+    position: relative;
 }
 .task-menu span {
     display: inline-block;
@@ -123,14 +145,37 @@ templateTask.innerHTML = `
         </div>
 `;
 
-export default class TaksItem extends HTMLElement {
-    constructor() {
+export default class TaskItem extends HTMLElement {
+    #task;
+    #taskItem;
+    #taskMenuBtn;
+    #taskMenu;
+
+    constructor(task) {
         super();
         this.attachShadow( { mode: 'open' });
         this.shadowRoot.appendChild(templateTask.content.cloneNode(true));
+        this.#task = task;
+        this.#taskItem = this.shadowRoot.querySelector('.tasks__item');
+        this.#taskMenuBtn = this.shadowRoot.querySelector('.task-menu');
+        this.#taskMenu = new TaskPopupMenu(task);
+        this.#taskMenuBtn.appendChild(this.#taskMenu);
+        this.addEventListener('click', () => { this.#clicked(this) });
 
+    }
+
+    get taskItem() {
+        return this.#taskItem;
+    }
+
+    #clicked(target) {
+        const event = new CustomEvent('task-item-clicked', {
+            bubbles: true,
+            detail: { target : this.#taskItem }
+        });
+        target.dispatchEvent(event);
     }
 }
 
 
-customElements.define('task-item', TaksItem);
+customElements.define('task-item', TaskItem);
