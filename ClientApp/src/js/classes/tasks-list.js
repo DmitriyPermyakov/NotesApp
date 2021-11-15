@@ -8,6 +8,8 @@ export default class TasksList {
             this.#closeAnotherPopup (event);
         });
         this.#taskList.addEventListener('click', (event) => { this.#selectTaskItem(event)});
+        this.#taskList.addEventListener('completed', (event) => { event.target.changeTaskState(); });
+        this.#taskList.addEventListener('delete-item', (event) => { event.target.deleteItem(this.taskList) });
     }
 
     get taskList() {

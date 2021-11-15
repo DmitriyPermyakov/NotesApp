@@ -59,10 +59,10 @@ templatePopup.innerHTML = `
 
 </style>
 <div class="task-popup">
-    <button class="task-popup__btn">Pin on the top</button>
-    <button class="task-popup__btn">Completed</button>
-    <button class="task-popup__btn">Change</button>
-    <button class="task-popup__btn">Delete</button>
+    <button class="task-popup__btn" id="pin">Pin on the top</button>
+    <button class="task-popup__btn" id="completed">Completed</button>
+    <button class="task-popup__btn" id="change">Change</button>
+    <button class="task-popup__btn" id="delete">Delete</button>
 </div>
 `;
 
@@ -70,6 +70,15 @@ export class TaskPopupMenu extends HTMLElement{
     #isOpened;
     #animationPopup;
     #popupMenu;
+    #pinOneTheTopButton;
+    #completeButton;
+    #changeButton;
+    #deleteButton;
+    #pinEvent;
+    #completedEvent;
+    #changeEvent;
+    #deleteEvent;
+
     constructor(task) {
         super();
         this.attachShadow({ mode: 'open'});
@@ -77,6 +86,25 @@ export class TaskPopupMenu extends HTMLElement{
         this.#popupMenu = this.shadowRoot.querySelector('.task-popup');
         this.#animation = new PopupMenuAnimation(this.#popupMenu);
         this.style.display = 'none';
+
+        this.#pinOneTheTopButton = this.shadowRoot.querySelector('#pin');
+        this.#completeButton = this.shadowRoot.querySelector('#completed');
+        this.#changeButton = this.shadowRoot.querySelector('#change');
+        this.#deleteButton = this.shadowRoot.querySelector('#delete');
+
+        this.#completedEvent = new CustomEvent('completed', {
+            bubbles: true,
+            composed: true,
+        });
+
+        this.#deleteEvent = new CustomEvent('delete-item', {
+            bubbles: true,
+            composed: true,
+        });
+
+
+        this.#completeButton.addEventListener('click', () => { this.dispatchEvent(this.#completedEvent) });
+        this.#deleteButton.addEventListener('click', () => { this.dispatchEvent(this.#deleteEvent) });
     }
 
     get #animation() {

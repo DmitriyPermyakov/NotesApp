@@ -1,6 +1,4 @@
 import { TaskPopupMenu } from "./task-popup-menu-component.js";
-import { tasksListElem } from "../app.js";
-
 
 const templateTask = document.createElement('template');
 templateTask.innerHTML = `
@@ -129,6 +127,21 @@ templateTask.innerHTML = `
 .task-menu span + span {
     margin-left: .3em;
 }
+
+.completed  .tasks-icon {
+    border: 2px solid #bfbfbf;
+    background-color: green;
+}
+.completed .task-icon__icon {
+    fill: #bfbfbf;
+}
+
+.completed:hover .tasks-icon {
+    border: 2px solid #707070;
+}
+.completed:hover .task-icon__icon {
+    fill: #707070;
+}
 </style>
 
 <div class="tasks__item">
@@ -159,12 +172,15 @@ export default class TaskItem extends HTMLElement {
     #taskMenuInnerElem;
     #isSelected;
     #popupOpenedEvent;
+    #isCompleted;
 
 
     constructor(task) {
         super();
         this.attachShadow( { mode: 'open' });
         this.shadowRoot.appendChild(templateTask.content.cloneNode(true));
+
+        this.#isCompleted = false;
 
         this.#isSelected = false;
         this.#task = task;
@@ -180,7 +196,7 @@ export default class TaskItem extends HTMLElement {
         document.body.addEventListener('click', (event) => { this.#closePopup(event); });
         this.#taskMenuBtn.addEventListener('click',  (event) => {
              event.stopPropagation();
-             this.#showPopup()
+             this.#showPopup();
         });
 
         this.#popupOpenedEvent = new CustomEvent('popup-menu-opened', {
@@ -232,6 +248,15 @@ export default class TaskItem extends HTMLElement {
     #showPopup() {
         this.#taskPopupMenu.isOpened = true;
         this.dispatchEvent(this.#popupOpenedEvent);
+    }
+
+    changeTaskState() {
+        this.#isCompleted = !this.#isCompleted;
+        this.#isCompleted ? this.taskItem.classList.add('completed') : this.taskItem.classList.remove('completed');
+    }
+
+    deleteItem(taskList) {
+        taskList.removeChild(this);
     }
 }
 
