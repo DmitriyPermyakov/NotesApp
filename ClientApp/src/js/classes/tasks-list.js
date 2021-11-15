@@ -4,29 +4,46 @@ export default class TasksList {
     constructor() {
         this.#taskList = document.querySelector('#tasks-list');
         this.#selected = null;
-        this.#taskList.addEventListener('task-item-clicked', (event) => { this.#select(event); console.log(event.target) });
+        this.#taskList.addEventListener('popup-menu-opened', (event) => {
+            this.#closeAnotherPopup (event);
+        });
+        this.#taskList.addEventListener('click', (event) => { this.#selectTaskItem(event)});
     }
 
     get taskList() {
         return this.#taskList;
     }
 
-    #select(event) {
+    #closeAnotherPopup(event) {
+        if(this.#selected === null) {
+            this.#selected = event.target;
+            this.#selected.isSelected = true;
+        } else {
+            if(this.#selected !== event.target) {
+                this.#selected.isSelected = false;
+                this.#selected.taskPopupMenu.isOpened = false;
+                this.#selected = event.target;
+            }
+        }
+    }
+    #selectTaskItem(event) {
         if(this.#selected !== null) {
-            if(event.detail.target !== this.#selected) {
-                this.#selected.classList.remove('selected');
-                event.detail.target.classList.add('selected');
-                this.#selected = event.detail.target;
+            if(event.target !== this.#selected & event.target !== this.#taskList) {
+                this.#selected.isSelected = false;
+                event.target.isSelected = true;
+                this.#selected = event.target;
             } else {
-                if(this.#selected === event.detail.target) {
-                    event.detail.target.classList.remove('selected');
+                if(this.#selected === event.target) {
+                    event.target.isSelected = false;
                     this.#selected = null;
                 }
             }
         } else {
-            event.detail.target.classList.add('selected');
-            this.#selected = event.detail.target;
-        }
+            if(event.target !== this.#taskList) {
+                event.target.isSelected = true;
+                this.#selected = event.target;
+            }
 
+        }
     }
 }

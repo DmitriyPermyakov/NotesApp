@@ -1,8 +1,10 @@
+import { PopupMenuAnimation } from "../classes/task-item-popup-animation.js";
+
 const templatePopup = document.createElement('template');
 templatePopup.innerHTML = `
 <style>
 .task-popup {
-    display: none;
+    display: flex;
     flex-direction: column;
     justify-items: center;
     align-items: center;
@@ -13,11 +15,13 @@ templatePopup.innerHTML = `
     background-color: #3a3f45;
 
     position: absolute;
-    top: 20px;
-    right: -10px;
+    top: 30px;
+    right: -7px;
 
     filter: drop-shadow(0 0 3px  #2e2e2e);
     z-index: 1;
+
+    transform-origin: top right;
 }
 
 .task-popup::after {
@@ -48,22 +52,56 @@ templatePopup.innerHTML = `
     color: #e7e8ea;
 }
 
-.task-popup__btn:nth-child(2) {
-    padding: .3em .2em;
+.task-popup__btn + .task-popup__btn{
+    padding-top: .3em;
 }
+
+
 </style>
 <div class="task-popup">
     <button class="task-popup__btn">Pin on the top</button>
     <button class="task-popup__btn">Completed</button>
+    <button class="task-popup__btn">Change</button>
     <button class="task-popup__btn">Delete</button>
 </div>
 `;
 
 export class TaskPopupMenu extends HTMLElement{
+    #isOpened;
+    #animationPopup;
+    #popupMenu;
     constructor(task) {
         super();
         this.attachShadow({ mode: 'open'});
         this.shadowRoot.appendChild(templatePopup.content.cloneNode(true));
+        this.#popupMenu = this.shadowRoot.querySelector('.task-popup');
+        this.#animation = new PopupMenuAnimation(this.#popupMenu);
+        this.style.display = 'none';
+    }
+
+    get #animation() {
+        return this.#animationPopup;
+    }
+
+    set #animation(value) {
+        this.#animationPopup = value;
+    }
+
+    get isOpened() {
+        return this.#isOpened;
+    }
+
+    set isOpened(value) {
+        if(value === true) {
+            this.style.display = 'block';
+            this.#isOpened = true;
+            this.#animation.playOpenAnimation();
+        } else {
+            if(value === false) {
+                this.#animation.playCloseAnimation();
+                this.#isOpened = false;
+            }
+        }
     }
 }
 

@@ -11,4 +11,8 @@ export default class TaskService {
         let createdDbTask = dataServices.addTask(task);
         this.#taskView.drawTask(createdDbTask);
     }
+
+    delete(task) {
+
+    }
 }

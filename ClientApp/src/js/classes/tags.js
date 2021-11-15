@@ -1,4 +1,4 @@
-export class Tags {
+export default class Tags {
     #tagsSelect;
     #tagsList;
     #tags = [ 'none', 'travelling', 'programming', 'creating' ];

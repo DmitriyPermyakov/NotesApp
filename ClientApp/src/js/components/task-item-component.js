@@ -113,6 +113,10 @@ templateTask.innerHTML = `
     flex-wrap: nowrap;
     position: relative;
 }
+
+.task-menu__btn {
+    cursor: pointer;
+}
 .task-menu span {
     display: inline-block;
     width: .5em;
@@ -138,9 +142,11 @@ templateTask.innerHTML = `
                 <p class="task-description"><slot name="description"</slot></p>
             </div>
             <div class="task-menu">
-                <span></span>
-                <span></span>
-                <span></span>
+                <div class="task-menu__btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
         </div>
 `;
@@ -149,31 +155,83 @@ export default class TaskItem extends HTMLElement {
     #task;
     #taskItem;
     #taskMenuBtn;
-    #taskMenu;
+    #taskPopupMenu;
+    #taskMenuInnerElem;
+    #isSelected;
+    #popupOpenedEvent;
+
 
     constructor(task) {
         super();
         this.attachShadow( { mode: 'open' });
         this.shadowRoot.appendChild(templateTask.content.cloneNode(true));
+
+        this.#isSelected = false;
         this.#task = task;
         this.#taskItem = this.shadowRoot.querySelector('.tasks__item');
-        this.#taskMenuBtn = this.shadowRoot.querySelector('.task-menu');
-        this.#taskMenu = new TaskPopupMenu(task);
-        this.#taskMenuBtn.appendChild(this.#taskMenu);
-        this.addEventListener('click', () => { this.#clicked(this) });
+        this.#taskMenuBtn = this.shadowRoot.querySelector('.task-menu__btn');
+        this.#taskPopupMenu = new TaskPopupMenu(task);
+        this.#taskPopupMenu.isOpened = false;
 
+        this.#taskMenuInnerElem = this.#taskPopupMenu.shadowRoot.querySelector('.task-popup');
+        this.#taskMenuBtn.appendChild(this.#taskPopupMenu);
+
+
+        document.body.addEventListener('click', (event) => { this.#closePopup(event); });
+        this.#taskMenuBtn.addEventListener('click',  (event) => {
+             event.stopPropagation();
+             this.#showPopup()
+        });
+
+        this.#popupOpenedEvent = new CustomEvent('popup-menu-opened', {
+            bubbles: true,
+            composed: true,
+            detail: this.#taskPopupMenu
+        });
+
+    }
+
+    get taskPopupMenu() {
+        return this.#taskPopupMenu;
     }
 
     get taskItem() {
         return this.#taskItem;
     }
 
-    #clicked(target) {
-        const event = new CustomEvent('task-item-clicked', {
-            bubbles: true,
-            detail: { target : this.#taskItem }
-        });
-        target.dispatchEvent(event);
+    get isSelected() {
+        return this.#isSelected;
+    }
+
+    set isSelected(value) {
+        if(value === true) {
+            this.#taskItem.classList.add('selected');
+            this.#isSelected = true;
+        } else {
+            this.#taskItem.classList.remove('selected');
+            this.#isSelected = false;
+        }
+    }
+
+    closePopupInAnotherTaskItem() {
+        this.#taskPopupMenu.isOpened = false;
+    }
+
+    #closePopup(event) {
+        let taskMenuRect = this.#taskMenuInnerElem.getBoundingClientRect();
+
+        if (event.clientX < taskMenuRect.left
+            || event.clientX > taskMenuRect.right
+            || event.clientY < taskMenuRect.top
+            || event.clientY > taskMenuRect.bottom) {
+            this.#taskPopupMenu.isOpened = false;
+        }
+
+    }
+
+    #showPopup() {
+        this.#taskPopupMenu.isOpened = true;
+        this.dispatchEvent(this.#popupOpenedEvent);
     }
 }
 

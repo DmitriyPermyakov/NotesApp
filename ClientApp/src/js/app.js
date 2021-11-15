@@ -1,10 +1,14 @@
 import Calendar from './components/custom-calendar-component.js';
-import { TaskButtons } from './classes/task-buttons.js';
+import TaskView from './classes/task-view.js';
+import TaskService from './classes/task-service.js';
+import  TaskButtons  from './classes/task-buttons.js';
 import  TasksList  from './classes/tasks-list.js';
-import { Tags } from './classes/tags.js';
+import  Tags  from './classes/tags.js';
 
 const tags = new Tags();
 const tasksListElem = new TasksList();
-const taskButtons = new TaskButtons(tasksListElem.taskList);
+const taskView = new TaskView(tasksListElem.taskList);
+const taskService = new TaskService(taskView);
+const taskButtons = new TaskButtons(tasksListElem.taskList, taskService);
 
-export { tags, tasksListElem, taskButtons }
+export { tags, tasksListElem, taskButtons, taskView, TaskService }
