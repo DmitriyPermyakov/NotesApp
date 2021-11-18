@@ -45,7 +45,7 @@
                 <svg class="search-icon">
                     <use xlink:href="#search"></use>
                 </svg>
-                <input type="text" class="search-field" placeholder="Search...">
+                <input  class="search-field" id="search-bar" type="text"  placeholder="Search...">
             </div>
             <div class="search-filter">
                 <button class="search-button">day</button>
@@ -119,8 +119,14 @@
         <!--Tasks-->
         <div class="tasks bordered">
             <div class="tasks__list" id="tasks-list">
-                <task-item></task-item>
-                <task-item></task-item>
+                <task-item>
+                    <div slot="title">Create a program</div>
+                    <div slot="description">The best program</div>
+                </task-item>
+                <task-item>
+                    <div slot="title">Create a another program</div>
+                    <div slot="description">More then the best program</div>
+                </task-item>
             </div>
 
             <!--Form-->
