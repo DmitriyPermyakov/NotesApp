@@ -29,6 +29,7 @@ namespace NotesApp
             services.AddControllers();
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<TaskDatabaseContext>(options => options.UseSqlServer(connectionString));
+            services.AddTransient<IDataRepository, DataRepository>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NotesApp", Version = "v1" });
