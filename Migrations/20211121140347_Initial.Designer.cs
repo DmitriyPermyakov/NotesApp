@@ -9,7 +9,7 @@ using NotesApp.Models;
 
 namespace NotesApp.Migrations
 {
-    [DbContext(typeof(TaskDatabaseContext))]
+    [DbContext(typeof(DatabaseContext))]
     [Migration("20211121140347_Initial")]
     partial class Initial
     {

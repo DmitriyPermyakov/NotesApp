@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace NotesApp.Models
 {
-    public interface IDataRepository
+    public interface ITaskDataRepository
     {
         IEnumerable<TaskItem> GetAllTaskItems { get; }
         TaskItem GetTaskItem(int id);

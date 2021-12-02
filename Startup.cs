@@ -28,8 +28,9 @@ namespace NotesApp
         {
             services.AddControllers();
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<TaskDatabaseContext>(options => options.UseSqlServer(connectionString));
-            services.AddTransient<IDataRepository, DataRepository>();
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
+            services.AddTransient<ITaskDataRepository, TaskDataRepository>();
+            services.AddTransient<ITagDataRepository, TagDataRepository>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NotesApp", Version = "v1" });
@@ -43,7 +44,7 @@ namespace NotesApp
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            
             app.UseRouting();
             app.UseSwagger();
             app.UseSwaggerUI(c =>

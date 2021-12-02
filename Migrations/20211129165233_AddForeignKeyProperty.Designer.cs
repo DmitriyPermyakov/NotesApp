@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NotesApp.Models;
 
 namespace NotesApp.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class TaskDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20211129165233_AddForeignKeyProperty")]
+    partial class AddForeignKeyProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,14 +50,7 @@ namespace NotesApp.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsFailed")
-                        .HasColumnType("bit");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Remind")
                         .HasColumnType("nvarchar(max)");
@@ -64,14 +59,24 @@ namespace NotesApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TagsId");
 
                     b.ToTable("TaskItem");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateEnd = new DateTime(2021, 2, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateStart = new DateTime(2021, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Create the best program in the world",
+                            Remind = "never",
+                            Title = "Create new program"
+                        });
                 });
 
             modelBuilder.Entity("NotesApp.Models.TaskItem", b =>
