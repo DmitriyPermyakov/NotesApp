@@ -2,26 +2,24 @@ const dataServices = {
     tasks : [],
     url: "https:localhost:5001/task",
 
-    loadAllTasks() {
+    async loadAllTasks() {
         let response = await fetch(url);
-        let result = await response.json();
-        return result;
+
+        return await response.json();
     },
 
-    addTask(task) {
+    async addTask(task) {
        let response =  await fetch(url, {method: 'POST', body: JSON.stringify(task)});
-       let result = await response.json();
-
-       return result;
+       return await response.json();
     },
 
     changeState() {
 
     },
 
-    deleteTask(id) {
+    async deleteTask(id) {
         let response = await fetch(url, { method: 'DELETE', body: id });
-        return response;
+        return response.status;
     },
 
 }

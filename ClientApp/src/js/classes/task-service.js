@@ -9,12 +9,12 @@ export default class TaskService {
 
     addTask(task) {
         let createdDbTask = dataServices.addTask(task);
-        this.#taskView.drawTask(createdDbTask);
+        this.#taskView.drawTask(JSON.parse(createdDbTask));
     }
 
     getAllTasks() {
-        dataServices.loadAllTasks();
-        this.#taskView.drawAllTasks(dataServices.tasks);
+        let tasks =  dataServices.loadAllTasks();
+        this.#taskView.drawAllTasks(JSON.parse(tasks));
     }
 
     delete(task) {
