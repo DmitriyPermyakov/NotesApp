@@ -12,7 +12,12 @@ export default class TaskService {
         this.#taskView.drawTask(createdDbTask);
     }
 
-    delete(task) {
+    getAllTasks() {
+        dataServices.loadAllTasks();
+        this.#taskView.drawAllTasks(dataServices.tasks);
+    }
 
+    delete(task) {
+        dataServices.deleteTask(task.id)
     }
 }

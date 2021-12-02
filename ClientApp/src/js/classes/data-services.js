@@ -1,16 +1,18 @@
 const dataServices = {
     tasks : [],
+    url: "https:localhost:5001/task",
 
     loadAllTasks() {
-        this.tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        let response = await fetch(url);
+        let result = await response.json();
+        return result;
     },
 
     addTask(task) {
-        console.log(task);
-        let jsonTask = JSON.stringify(task);
-        console.log(jsonTask);
-        localStorage.setItem('task', jsonTask);
-        return JSON.parse(localStorage.getItem('task'));
+       let response =  await fetch(url, {method: 'POST', body: JSON.stringify(task)});
+       let result = await response.json();
+
+       return result;
     },
 
     changeState() {
@@ -18,7 +20,8 @@ const dataServices = {
     },
 
     deleteTask(id) {
-
+        let response = await fetch(url, { method: 'DELETE', body: id });
+        return response;
     },
 
 }
