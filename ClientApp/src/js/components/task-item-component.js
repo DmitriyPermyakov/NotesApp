@@ -1,4 +1,5 @@
 import { TaskPopupMenu } from "./task-popup-menu-component.js";
+import { taskService } from "../app.js";
 
 const templateTask = document.createElement('template');
 templateTask.innerHTML = `
@@ -256,7 +257,10 @@ export default class TaskItem extends HTMLElement {
     }
 
     deleteItem(taskList) {
-        taskList.removeChild(this);
+        let response = taskService.delete(this.#task.id);
+        if(response.ok) {
+            taskList.removeChild(this);
+        }
     }
 }
 
