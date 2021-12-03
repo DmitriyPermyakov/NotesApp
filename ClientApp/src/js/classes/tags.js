@@ -1,17 +1,23 @@
+import TagsService from "./tags-service.js";
+
 export default class Tags {
     #tagsSelect;
     #tagsList;
-    #tags = [ 'none', 'travelling', 'programming', 'creating' ];
+    #tags = [];
     #inputField;
     #addButton;
+    #tagService;
 
     constructor() {
+        this.#tagService = new TagsService();
         this.#tagsSelect = document.querySelector('#form-tags-list');
         this.#tagsList = document.querySelector('#tags-list');
         this.#createAddButton();
 
-        this.#drawTagsInList();
-        this.#drawTagsInSelect();
+        this.#tagService.loadAllTags().then(tags => this.#loadTagsInArray(tags)).then( () => this.#drawTagsInList(this.#tags)).then(() => this.#drawTagsInSelect(this.#tags));
+
+        // this.#drawTagsInSelect(this.#tags);
+
         this.#createInputField();
         this.#addButton.appendChild(this.#inputField);
 
@@ -30,36 +36,45 @@ export default class Tags {
                 this.#removeTag(event.target.previousElementSibling);
             }
         });
+
+
     }
 
-    #drawTagsInSelect() {
+    #loadTagsInArray(tags) {
+        this.#tags = tags;
+    }
+
+    #drawTagsInSelect(tags) {
         this.#tagsSelect.innerHTML = '';
-        for(let tag of this.#tags) {
-            let tagElem = document.createElement('option');
-            tagElem.textContent = tag;
-            tagElem.setAttribute('value', tag);
-            this.#tagsSelect.appendChild(tagElem);
-        }
+        tags.forEach(tag => this.#createTagOptionInSelect(tag));
     }
 
-    #drawTagsInList() {
+    #drawTagsInList(tags) {
+        console.log(tags);
         this.#tagsList.innerHTML = '';
-        for(let count  = 1; count < this.#tags.length; count++) {
-            let tagElem = document.createElement('li');
-            let text = document.createElement('span');
-            let btn = document.createElement('button');
-            btn.setAttribute('id', 'remove-tag');
-            btn.classList.add('tags-list__remove-btn');
-            text.textContent = this.#tags[count];
-            tagElem.appendChild(text);
-            tagElem.appendChild(btn);
-            tagElem.classList.add('tags-list__item');
-            this.#tagsList.appendChild(tagElem);
-        }
-
+        tags.forEach(tag => this.#createTagLabel(tag));
         this.#tagsList.appendChild(this.#addButton);
     }
 
+    #createTagLabel(tag) {
+        let tagElem = document.createElement('li');
+        let text = document.createElement('span');
+        let btn = document.createElement('button');
+        btn.setAttribute('id', 'remove-tag');
+        btn.classList.add('tags-list__remove-btn');
+        text.textContent = tag.name;
+        tagElem.appendChild(text);
+        tagElem.appendChild(btn);
+        tagElem.classList.add('tags-list__item');
+        this.#tagsList.appendChild(tagElem);
+    }
+
+    #createTagOptionInSelect(tag) {
+        let tagElem = document.createElement('option');
+        tagElem.textContent = tag.name;
+        tagElem.setAttribute('value', tag.id);
+        this.#tagsSelect.appendChild(tagElem);
+    }
     #createAddButton() {
         this.#addButton = document.createElement('button');
         this.#addButton.classList.add('tags-list__add-tag-btn');
@@ -80,9 +95,9 @@ export default class Tags {
 
     addTag(input) {
          if(input.value !== '') {
-             this.#tags.push(input.value);
-             this.#drawTagsInList();
-             this.#drawTagsInSelect();
+             let returnedTag = this.#tagService.addTag( { id: 0, name: input.value });
+             this.#createTagLabel(returnedTag);
+             this.#createTagOptionInSelect(returnedTag);
              input.style.display = 'none';
              input.value = '';
          } else {

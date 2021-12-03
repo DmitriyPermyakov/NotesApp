@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Startup.cs~RF6734dd16.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="ClientApp\dist\" />
     <Folder Include="ClientApp\src\img\icons\" />
     <Folder Include="ClientApp\src\js\components\" />

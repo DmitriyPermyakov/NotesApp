@@ -1,4 +1,4 @@
-const dataServices = {
+const taskDataServices = {
     tasks : [],
     url: "https:localhost:5001/task",
 
@@ -24,4 +24,4 @@ const dataServices = {
 
 }
 
-export { dataServices };
+export { taskDataServices };

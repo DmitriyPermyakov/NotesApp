@@ -1,4 +1,4 @@
-import  { dataServices } from "./data-services.js";
+import  { taskDataServices } from "./task-data-services.js";
 
 export default class TaskService {
     #taskView;
@@ -8,16 +8,16 @@ export default class TaskService {
     }
 
     addTask(task) {
-        let createdDbTask = dataServices.addTask(task);
+        let createdDbTask = taskDataServices.addTask(task);
         this.#taskView.drawTask(JSON.parse(createdDbTask));
     }
 
     getAllTasks() {
-        let tasks =  dataServices.loadAllTasks();
+        let tasks =  taskDataServices.loadAllTasks();
         this.#taskView.drawAllTasks(JSON.parse(tasks));
     }
 
     delete(task) {
-        dataServices.deleteTask(task.id)
+        taskDataServices.deleteTask(task.id)
     }
 }
