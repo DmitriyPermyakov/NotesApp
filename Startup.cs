@@ -18,6 +18,7 @@ namespace NotesApp
 {
     public class Startup
     {
+        private readonly string localhostConnection = "localhostConnection";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -35,14 +36,15 @@ namespace NotesApp
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NotesApp", Version = "v1" });
             });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(connectionString, builder => builder.WithOrigins("http://localhost3000"));
+            });
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
 
             
             app.UseRouting();
@@ -52,9 +54,15 @@ namespace NotesApp
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Notes App v1");
             });
 
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseCors();
+            }
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers().RequireCors(localhostConnection);
             });
         }
     }
