@@ -39,7 +39,7 @@ namespace NotesApp
 
             services.AddCors(options =>
             {
-                options.AddPolicy(name: localhostConnection, builder => builder.WithOrigins("http://localhost:3000"));
+                options.AddPolicy(name: localhostConnection, builder => builder.WithOrigins("http://localhost:3000").AllowAnyMethod().WithHeaders(headers: "Content-Type"));
             });
         }
         
@@ -59,7 +59,7 @@ namespace NotesApp
                 app.UseDeveloperExceptionPage();
                 
             }
-            app.UseCors();
+            app.UseCors(localhostConnection);
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers().RequireCors(localhostConnection);

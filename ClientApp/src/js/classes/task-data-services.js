@@ -1,6 +1,6 @@
 const taskDataServices = {
     tasks : [],
-    url: "https:localhost:5001/task",
+    url: "https://localhost:5001/task",
 
     async loadAllTasks() {
         let response = await fetch(url);
@@ -9,7 +9,7 @@ const taskDataServices = {
     },
 
     async addTask(task) {
-       let response =  await fetch(url, {method: 'POST', body: JSON.stringify(task)});
+       let response = await fetch(this.url, {method: 'POST',mode: 'no-cors', body: JSON.stringify(task)});
        return await response.json();
     },
 

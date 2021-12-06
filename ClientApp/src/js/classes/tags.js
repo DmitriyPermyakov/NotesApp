@@ -14,7 +14,11 @@ export default class Tags {
         this.#tagsList = document.querySelector('#tags-list');
         this.#createAddButton();
 
-        this.#tagService.loadAllTags().then(tags => this.#loadTagsInArray(tags)).then( () => this.#drawTagsInList(this.#tags)).then(() => this.#drawTagsInSelect(this.#tags));
+        this.#tagService.loadAllTags().then(tags => this.#loadTagsInArray(tags)).then( () =>
+        {
+            this.#drawTagsInList(this.#tags);
+            this.#drawTagsInSelect(this.#tags);
+        });
 
         // this.#drawTagsInSelect(this.#tags);
 
@@ -95,9 +99,13 @@ export default class Tags {
 
     addTag(input) {
          if(input.value !== '') {
-             let returnedTag = this.#tagService.addTag( { id: 0, name: input.value });
-             this.#createTagLabel(returnedTag);
-             this.#createTagOptionInSelect(returnedTag);
+             let returnedTag;
+             this.#tagService.addTag( { id: 0, name: input.value });
+            //  .then(tag => returnedTag = tag).then(() => {
+            //      this.#createTagLabel(returnedTag);
+            //      this.#createTagOptionInSelect(returnedTag);
+            //  });
+
              input.style.display = 'none';
              input.value = '';
          } else {

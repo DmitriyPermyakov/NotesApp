@@ -6,9 +6,9 @@ namespace NotesApp.Models
     {
         IEnumerable<TaskItem> GetAllTaskItems { get; }
         TaskItem GetTaskItem(int id);
-        void CreateTaskItem(TaskItem newTask);
+        TaskItem CreateTaskItem(TaskItem newTask);
         void UpdateTaskItem(TaskItem changedTask);
-        void DeleteTaskItem(int id);
+        void DeleteTaskItem(TaskItem task);
 
     }
 }

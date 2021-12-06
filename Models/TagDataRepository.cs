@@ -13,15 +13,22 @@ namespace NotesApp.Models
             this.context = context;
         }
         public IEnumerable<Tags> GetAllTags => context.Tags;
-        public void CreateTag(Tags newTag)
+        public Tags GetTag(int id)
+        {
+            return context.Tags.Find(id);
+        }
+        public Tags CreateTag(Tags newTag)
         {
             newTag.Id = 0;
-            context.Add(newTag);
+            context.Tags.Add(newTag);
+            
             context.SaveChanges();
+            
+            return context.Tags.Find(newTag.Id);
         }
-        public void DeleteTag(int id)
+        public void DeleteTag(Tags tag)
         {            
-            context.Tags.Remove(new Tags { Id = id });
+            context.Tags.Remove(tag);
             context.SaveChanges();
         }
     }

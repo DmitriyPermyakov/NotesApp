@@ -6,7 +6,7 @@ export default class TagsService {
     }
 
     async addTag(tag) {
-       return tagsDataServices.addTag(tag);
+      await tagsDataServices.addTag(tag);
     }
 
     async loadAllTags() {

@@ -7,9 +7,9 @@ export default class TaskService {
         this.#taskView = taskView;
     }
 
-    addTask(task) {
-        let createdDbTask = taskDataServices.addTask(task);
-        this.#taskView.drawTask(JSON.parse(createdDbTask));
+    async addTask(task) {
+        return await taskDataServices.addTask(task);
+
     }
 
     getAllTasks() {

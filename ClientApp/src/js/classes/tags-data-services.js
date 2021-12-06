@@ -6,8 +6,7 @@ const tagsDataServices = {
     },
 
     async addTag(tag) {
-       let response =  await fetch(url, {method: 'POST', body: JSON.stringify(tag)});
-       return await response.json();
+       await fetch(this.url, { method: 'POST', mode: 'no-cors', cache: 'no-cache', body: JSON.stringify( { "id": 0, "name": "newTag" })});
     },
 
     async deleteTag(id) {

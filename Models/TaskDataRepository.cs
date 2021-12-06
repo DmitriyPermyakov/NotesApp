@@ -17,14 +17,17 @@ namespace NotesApp.Models
         public IEnumerable<TaskItem> GetAllTaskItems => context.TaskItem.Include(t => t.Tags);
         public TaskItem GetTaskItem(int id) => this.context.TaskItem.Include(t => t.Tags).First(t => t.Id == id);        
 
-        public void CreateTaskItem(TaskItem newTask)
+        public TaskItem CreateTaskItem(TaskItem newTask)
         {
             newTask.Id = 0;
             newTask.IsCompleted = false;
             newTask.IsFailed = false;
             newTask.Tags = null;
-            context.Add(newTask);            
+            context.TaskItem.Add(newTask);        
+            
             context.SaveChanges();
+
+            return context.TaskItem.Find(newTask.Id);
         }
 
         public void UpdateTaskItem(TaskItem changedTask)
@@ -32,9 +35,9 @@ namespace NotesApp.Models
             
         }
 
-        public void DeleteTaskItem(int id)
+        public void DeleteTaskItem(TaskItem task)
         {            
-            context.TaskItem.Remove(new TaskItem { Id = id });
+            context.TaskItem.Remove(task);
             context.SaveChanges();
         }
     }
