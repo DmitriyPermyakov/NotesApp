@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Http;
 namespace NotesApp.Controllers
 {
     [ApiController]
+    [Consumes("application/json")]
+    [Produces("application/json")]
     [Route("[controller]")]        
     public class TagController : ControllerBase
     {
@@ -45,6 +47,7 @@ namespace NotesApp.Controllers
         [HttpPost]
         public IActionResult CreateTag([FromBody] Tags tag)
         {
+            Console.WriteLine(tag + "************************");
             Tags createdTag = repository.CreateTag(tag);
             var routeValue = new { Id = createdTag.Id };
             return CreatedAtAction(nameof(GetTag), routeValue, createdTag);

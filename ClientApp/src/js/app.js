@@ -3,7 +3,7 @@ import TaskView from './classes/task-view.js';
 import TaskService from './classes/task-service.js';
 import  TaskButtons  from './classes/task-buttons.js';
 import  TasksList  from './classes/tasks-list.js';
-import  Tags  from './classes/tags.js';
+import  Tags  from './classes/tags/tags.js';
 import Search from './classes/search.js';
 
 const tags = new Tags();

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NotesApp.Models;
 
 namespace NotesApp.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class TaskDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20211208202748_Changed database schema")]
+    partial class Changeddatabaseschema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

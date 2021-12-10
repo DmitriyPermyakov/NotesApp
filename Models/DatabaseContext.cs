@@ -16,10 +16,10 @@ namespace NotesApp.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Tags>().HasData(
-            //    new Tags() { Id = 1, Name = "Programming" },
-            //    new Tags() { Id = 2, Name = "Travelling" },
-            //    new Tags() { Id = 3, Name = "Education" });
+            modelBuilder.Entity<Tags>().HasData(
+                new Tags() { Id = 1, Name = "Programming" },
+                new Tags() { Id = 2, Name = "Travelling" },
+                new Tags() { Id = 3, Name = "Education" });
 
             //modelBuilder.Entity<TaskItem>().HasData(
             //    new TaskItem()
@@ -31,8 +31,7 @@ namespace NotesApp.Models
             //        DateEnd = new DateTime(2021, 12, 15),
             //        IsCompleted = false,
             //        IsFailed = false,
-            //        Remind = "never",
-            //        TagsId = 1
+            //        Remind = "never",                   
             //    },
             //    new TaskItem()
             //    {
@@ -43,8 +42,7 @@ namespace NotesApp.Models
             //        DateEnd = new DateTime(2022, 01, 15),
             //        IsCompleted = false,
             //        IsFailed = false,
-            //        Remind = "one day",
-            //        TagsId = 2
+            //        Remind = "one day",                    
             //    },
             //    new TaskItem()
             //    {
@@ -55,8 +53,7 @@ namespace NotesApp.Models
             //        DateEnd = new DateTime(2022, 02, 15),
             //        IsCompleted = false,
             //        IsFailed = false,
-            //        Remind = "two days",
-            //        TagsId = 3
+            //        Remind = "two days",                    
             //    });
         }
     }

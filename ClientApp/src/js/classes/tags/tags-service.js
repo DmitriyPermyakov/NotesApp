@@ -6,15 +6,15 @@ export default class TagsService {
     }
 
     async addTag(tag) {
-      await tagsDataServices.addTag(tag);
+      return await tagsDataServices.addTag(tag);
     }
 
     async loadAllTags() {
        return await tagsDataServices.loadAllTags();
     }
 
-    deleteTag(id) {
-
+    async deleteTag(id) {
+      return await tagsDataServices.deleteTag(id);
     }
 
 }

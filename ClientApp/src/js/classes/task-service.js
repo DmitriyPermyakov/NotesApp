@@ -14,7 +14,7 @@ export default class TaskService {
 
     getAllTasks() {
         let tasks =  taskDataServices.loadAllTasks();
-        this.#taskView.drawAllTasks(JSON.parse(tasks));
+        // this.#taskView.drawAllTasks(JSON.parse(tasks));
     }
 
     delete(task) {

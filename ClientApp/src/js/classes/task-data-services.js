@@ -9,8 +9,8 @@ const taskDataServices = {
     },
 
     async addTask(task) {
-       let response = await fetch(this.url, {method: 'POST',mode: 'no-cors', body: JSON.stringify(task)});
-       return await response.json();
+       return await fetch(this.url, {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify(task)}).then(response => response.json());
+
     },
 
     changeState() {

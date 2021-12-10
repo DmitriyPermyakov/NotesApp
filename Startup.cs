@@ -32,6 +32,7 @@ namespace NotesApp
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
             services.AddTransient<ITaskDataRepository, TaskDataRepository>();
             services.AddTransient<ITagDataRepository, TagDataRepository>();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NotesApp", Version = "v1" });
@@ -39,14 +40,16 @@ namespace NotesApp
 
             services.AddCors(options =>
             {
-                options.AddPolicy(name: localhostConnection, builder => builder.WithOrigins("http://localhost:3000").AllowAnyMethod().WithHeaders(headers: "Content-Type"));
+                options.AddPolicy(name: localhostConnection, builder => builder.WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .WithMethods("PUT", "DELETE", "GET", "POST"));
             });
         }
-        
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            
+
             app.UseRouting();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -57,7 +60,7 @@ namespace NotesApp
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                
+
             }
             app.UseCors(localhostConnection);
             app.UseEndpoints(endpoints =>
@@ -65,5 +68,6 @@ namespace NotesApp
                 endpoints.MapControllers().RequireCors(localhostConnection);
             });
         }
+           
     }
 }

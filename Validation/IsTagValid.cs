@@ -3,23 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using NotesApp.Models;
 
 namespace NotesApp.Validation
-{    
-    public class RemindStringIsValid : ValidationAttribute
-    {
-        private string[] remindBefore = new[] { "never", "one day", "two days", "three days" };
+{
+    public class IsTagValid : ValidationAttribute
+    {        
+        
+
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            string comparingString = value.ToString();
+            ITagDataRepository repository = (ITagDataRepository)validationContext.GetService(typeof(ITagDataRepository));
             ErrorMessage = ErrorMessageString;
-            if(!remindBefore.Contains(comparingString.ToLower()))
+            int[] Ids = repository.GetIds();            
+            if(!Ids.Contains((int)value))
             {
-                return new ValidationResult(ErrorMessage);
+                return new ValidationResult(ErrorMessage);                
             }
 
             return ValidationResult.Success;
         }
-
     }
 }

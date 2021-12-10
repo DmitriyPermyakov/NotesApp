@@ -14,15 +14,14 @@ namespace NotesApp.Models
             this.context = context;
         }
 
-        public IEnumerable<TaskItem> GetAllTaskItems => context.TaskItem.Include(t => t.Tags);
-        public TaskItem GetTaskItem(int id) => this.context.TaskItem.Include(t => t.Tags).First(t => t.Id == id);        
+        public IEnumerable<TaskItem> GetAllTaskItems => context.TaskItem;
+        public TaskItem GetTaskItem(int id) => this.context.TaskItem.Find(id);        
 
         public TaskItem CreateTaskItem(TaskItem newTask)
         {
             newTask.Id = 0;
             newTask.IsCompleted = false;
-            newTask.IsFailed = false;
-            newTask.Tags = null;
+            newTask.IsFailed = false;            
             context.TaskItem.Add(newTask);        
             
             context.SaveChanges();

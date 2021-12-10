@@ -20,8 +20,6 @@ export default class Tags {
             this.#drawTagsInSelect(this.#tags);
         });
 
-        // this.#drawTagsInSelect(this.#tags);
-
         this.#createInputField();
         this.#addButton.appendChild(this.#inputField);
 
@@ -37,7 +35,7 @@ export default class Tags {
 
         this.#tagsList.addEventListener('click', (event) => {
             if(event.target.id === 'remove-tag') {
-                this.#removeTag(event.target.previousElementSibling);
+                this.#removeTag(event.target.parentElement);
             }
         });
 
@@ -54,7 +52,6 @@ export default class Tags {
     }
 
     #drawTagsInList(tags) {
-        console.log(tags);
         this.#tagsList.innerHTML = '';
         tags.forEach(tag => this.#createTagLabel(tag));
         this.#tagsList.appendChild(this.#addButton);
@@ -67,6 +64,7 @@ export default class Tags {
         btn.setAttribute('id', 'remove-tag');
         btn.classList.add('tags-list__remove-btn');
         text.textContent = tag.name;
+        tagElem.id = tag.id;
         tagElem.appendChild(text);
         tagElem.appendChild(btn);
         tagElem.classList.add('tags-list__item');
@@ -84,6 +82,11 @@ export default class Tags {
         this.#addButton.classList.add('tags-list__add-tag-btn');
     }
 
+    #moveAddButtonToTheEndOfTagsList() {
+        this.#tagsList.removeChild(this.#addButton);
+        this.#tagsList.appendChild(this.#addButton);
+    }
+
     #createInputField() {
         this.#inputField = document.createElement('input');
         this.#inputField.classList.add('tag-list__input');
@@ -99,12 +102,17 @@ export default class Tags {
 
     addTag(input) {
          if(input.value !== '') {
-             let returnedTag;
-             this.#tagService.addTag( { id: 0, name: input.value });
-            //  .then(tag => returnedTag = tag).then(() => {
-            //      this.#createTagLabel(returnedTag);
-            //      this.#createTagOptionInSelect(returnedTag);
-            //  });
+             if (!this.#checkIfSuchTagAlreadyExist(input.value)) {
+                 let returnedTag;
+                 this.#tagService.addTag({ id: 0, name: input.value }).then(tag => returnedTag = tag).then(() => {
+                     this.#tags.push(returnedTag);
+                     this.#createTagLabel(returnedTag);
+                     this.#moveAddButtonToTheEndOfTagsList();
+                     this.#createTagOptionInSelect(returnedTag);
+                 });
+             } else {
+                 alert("Such tag already exist");
+             }
 
              input.style.display = 'none';
              input.value = '';
@@ -114,13 +122,27 @@ export default class Tags {
          return;
     }
 
+    #checkIfSuchTagAlreadyExist(value) {
+        let tags = this.#tags.map(t => t.name.toLowerCase());
+        if(tags.includes(value.toLowerCase())) {
+            return true;
+        }
+        return false;
+    }
+
     #removeTag(elem) {
-       let position = this.#tags.indexOf(elem.textContent);
-       if(position !== -1) {
-           this.#tags.splice(position, 1);
-           this.#drawTagsInSelect();
-           this.#drawTagsInList();
-       }
-       return;
+        let position = this.#tags.findIndex(t => t.id == elem.id);
+
+        if (position !== -1) {
+            this.#tagService.deleteTag(new Number(elem.id)).then(status => {
+                if (status == "200") {
+                    this.#tags.splice(position, 1);
+                    this.#tagsList.removeChild(elem);
+                    this.#drawTagsInSelect(this.#tags);
+                } else {
+                    return;
+                }
+            });
+        }
     }
 }

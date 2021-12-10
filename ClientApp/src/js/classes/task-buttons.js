@@ -58,8 +58,12 @@ export default class TaskButtons {
 
     #addTaskItem() {
         if(this.#validation.isAllFieldsValid) {
-            let task = new Task(titleInput.value, descriptionInput.value, dateFrom.value, dateTo.value, remindList.value, tagsList.value);
-            this.#taskService.addTask(task);
+            let dateStart = new Date(dateFrom.value).toISOString();
+            let dateEnd = new Date(dateTo.value).toISOString();
+            console.log(remindList.value);
+            let task = new Task(0, titleInput.value, descriptionInput.value, dateStart, dateEnd, false, false, remindList.value, tagsList.value);
+            console.log(task);
+            this.#taskService.addTask(task).then(task => console.log(task));
             this.#clearFormFields();
         }
         return;

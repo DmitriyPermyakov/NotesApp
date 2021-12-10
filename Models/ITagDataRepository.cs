@@ -8,5 +8,6 @@ namespace NotesApp.Models
         public Tags GetTag(int id);
         public Tags CreateTag(Tags tag);
         public void DeleteTag(Tags tag);
+        public int[] GetIds();
     }
 }

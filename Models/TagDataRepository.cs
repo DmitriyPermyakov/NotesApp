@@ -13,6 +13,11 @@ namespace NotesApp.Models
             this.context = context;
         }
         public IEnumerable<Tags> GetAllTags => context.Tags;
+
+        public int[] GetIds()
+        {
+            return context.Tags.Select(t => t.Id).ToArray();
+        }
         public Tags GetTag(int id)
         {
             return context.Tags.Find(id);

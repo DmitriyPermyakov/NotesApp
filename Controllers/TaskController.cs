@@ -1,20 +1,25 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using NotesApp.Models;
+using System;
 
 
 namespace NotesApp.Controllers
 {
     [ApiController]
+    [Consumes("application/json")]
+    [Produces("application/json")]
     [Route("[controller]")]
     public class TaskController : ControllerBase
     {               
 
         private ITaskDataRepository repository;
+        private ITagDataRepository tagRepository;
 
-        public TaskController(ITaskDataRepository repository)
+        public TaskController(ITaskDataRepository repository, ITagDataRepository tagDataRepository)
         {
-            this.repository = repository;                   
+            this.repository = repository;
+            this.tagRepository = tagDataRepository;
         }
 
         [HttpGet]
@@ -40,16 +45,18 @@ namespace NotesApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateTaskItem([FromBody] TaskItem taskItem)
+        public ActionResult CreateTaskItem([FromBody] MappedTaskItem taskItem)
         {
             if(ModelState.IsValid)
-            {                
-                TaskItem task = repository.CreateTaskItem(taskItem);
+            {
+                Mapper mapper = new Mapper(tagRepository);
+
+                TaskItem task = repository.CreateTaskItem(mapper.MapTask(taskItem));
                 var routeValue = new { Id = task.Id };
                 return CreatedAtAction(nameof(GetTaskItem), routeValue, task);
             }
             else
-            {
+            {                
                 return BadRequest(taskItem);
             }
         }
