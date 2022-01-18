@@ -11,7 +11,7 @@ namespace NotesApp.Validation
         private string[] remindBefore = new[] { "never", "one day", "two days", "three days" };
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            string comparingString = value.ToString();
+            string comparingString = (string)value;            
             ErrorMessage = ErrorMessageString;
             if(!remindBefore.Contains(comparingString.ToLower()))
             {
